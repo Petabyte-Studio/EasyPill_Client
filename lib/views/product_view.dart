@@ -12,7 +12,6 @@ class _ProductView extends State<ProductView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     data = List.empty(growable: true);
     getJSONData();
@@ -29,33 +28,29 @@ class _ProductView extends State<ProductView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Product List'),
-          ),
-          body: Container(
-            child: data!.length == 0
-                ? Text('데이터가 없습니다', style: TextStyle(fontSize: 20))
-                : ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Container(
-                          child: Column(
-                            children: <Widget>[
-                              Text(data![index]['id'].toString()),
-                              Text(data![index]['name'].toString()),
-                              Text(data![index]['company'].toString()),
-                              Text(data![index]['price'].toString()),
-                              Text(data![index]['rate'].toString()),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: data!.length),
-          )),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Product List'),
+        ),
+        body: Container(
+          child: data!.length == 0
+              ? Text('데이터가 없습니다', style: TextStyle(fontSize: 20))
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Column(
+                        children: <Widget>[
+                          Text(data![index]['id'].toString()),
+                          Text(data![index]['name'].toString()),
+                          Text(data![index]['company'].toString()),
+                          Text(data![index]['price'].toString()),
+                          Text(data![index]['rate'].toString()),
+                        ],
+                      ),
+                    );
+                  },
+                  itemCount: data!.length),
+        ));
   }
 }
 
