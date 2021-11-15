@@ -3,43 +3,75 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ProductView extends StatefulWidget {
-  State<StatefulWidget> createState() {
-    return _ProductView();
-  }
-}
-
-Future<String> fetchPost() async {
-  var response = await http.get(Uri.parse('http://10.0.2.2:8000/product'));
-  return utf8.decode(response.bodyBytes);
+  State<StatefulWidget> createState() => _ProductView();
 }
 
 class _ProductView extends State<ProductView> {
   String test = 'Before Add';
+  List? data;
 
-  void foo() async {
-    final value = await fetchPost();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    data = List.empty(growable: true);
+    getJSONData();
+  }
+
+  void getJSONData() async {
+    var url = 'http://127.0.0.1:8000/product';
+    var response = await http.get(Uri.parse(url));
     setState(() {
-      test = value;
+      var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
+      data!.addAll(dataFromJSON);
     });
-
-    print(value);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('fuck you');
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('P'),
+            title: Text('Product List'),
           ),
-          body: Column(children: <Widget>[
-            ElevatedButton(
-              child: Text('FETCH'),
-              onPressed: () => foo(),
-            ),
-            Text('$test'),
-          ])),
+          body: Container(
+            child: data!.length == 0
+                ? Text('데이터가 없습니다', style: TextStyle(fontSize: 20))
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Text(data![index]['id'].toString()),
+                              Text(data![index]['name'].toString()),
+                              Text(data![index]['company'].toString()),
+                              Text(data![index]['price'].toString()),
+                              Text(data![index]['rate'].toString()),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: data!.length),
+          )),
     );
   }
 }
+
+
+// ListView.builder(
+//                     itemBuilder: (context, index) {
+//                       return Card(
+//                           child: Container(
+//                               child: Column(
+//                         children: <Widget>[
+//                           Text(data![index]['id'].toString()),
+//                           Text(data![index]['name'].toString()),
+//                           Text(data![index]['company'].toString()),
+//                           Text(data![index]['price'].toString()),
+//                           Text(data![index]['rate'].toString()),
+//                         ],
+//                       )));
+//                     },
+//                     itemCount: data!.length),
