@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'views/product_view.dart';
 import 'views/setting_view.dart';
+import 'views/detail_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => MainPage(),
           '/product': (context) => ProductView(),
           '/setting': (context) => SettingView(),
+          '/detail': (context) => DetailView(),
           // '/detail' :
         });
   }

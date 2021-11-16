@@ -17,6 +17,7 @@ class _SettingViewState extends State<SettingView> {
   @override
   void initState() {
     super.initState();
+    userEmail = auth.currentUser?.email.toString();
   }
 
   void login(String email, String password) async {
