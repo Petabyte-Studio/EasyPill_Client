@@ -29,28 +29,36 @@ class _ProductView extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Product List'),
-        ),
-        body: Container(
-          child: data!.length == 0
-              ? Text('데이터가 없습니다', style: TextStyle(fontSize: 20))
-              : ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
+      appBar: AppBar(
+        title: Text('Product List'),
+      ),
+      body: Container(
+        child: data!.length == 0
+            ? Text('데이터가 없습니다', style: TextStyle(fontSize: 20))
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    child: Card(
                       child: Column(
                         children: <Widget>[
                           Text(data![index]['id'].toString()),
                           Text(data![index]['name'].toString()),
                           Text(data![index]['company'].toString()),
                           Text(data![index]['price'].toString()),
-                          Text(data![index]['rate'].toString()),
+                          Text((data![index]['avg_rate'] ?? 0.0)
+                              .toStringAsFixed(2)),
                         ],
                       ),
-                    );
-                  },
-                  itemCount: data!.length),
-        ));
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/detail',
+                          arguments: data![index]['id'].toString());
+                    },
+                  );
+                },
+                itemCount: data!.length),
+      ),
+    );
   }
 }
 
