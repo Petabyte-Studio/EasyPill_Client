@@ -12,7 +12,7 @@ class _DetailView extends State<DetailView> {
   var id;
 
   void getJSONDataFromID(String query) async {
-    var url = 'http://127.0.0.1:8000/product/' + query;
+    var url = 'http://10.0.2.2:8000/product/' + query;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -37,22 +37,56 @@ class _DetailView extends State<DetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Detail Content')),
+      appBar: AppBar(elevation: 0),
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        color: Color(0xFF20bca4),
+        width: double.infinity,
+        child: Stack(
           children: <Widget>[
-            Text('ID# ' + (id ?? "Waiting")),
-            Text('Name# ' + detail['name'].toString()),
-            Text('Company# ' + detail['company'].toString()),
-            Text('Price# ' + detail['price'].toString()),
-            Text('Rate# ' + (detail['avg_rate'] ?? 0.0).toStringAsFixed(2)),
-            Text('\n\nComments\n===================='),
-            if (detail['comments'] == null)
-              Text('댓글 없음')
-            else
-              for (var i in detail['comments'])
-                Text(i['user'] + ': ' + i['comment']),
+            Container(
+              margin: EdgeInsets.only(top: 100),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(top: 80),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      detail['name'].toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    Text('Company# ' + detail['company'].toString()),
+                    Text('Price# ' + detail['price'].toString()),
+                    Text('Rate# ' +
+                        (detail['avg_rate'] ?? 0.0).toStringAsFixed(2)),
+                    Text('\n\nComments\n===================='),
+                    if (detail['comments'] == null)
+                      Text('댓글 없음')
+                    else
+                      for (var i in detail['comments'])
+                        Text(i['user'] + ': ' + i['comment']),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.network(detail['image'].toString(),
+                    width: 180, fit: BoxFit.contain),
+              ),
+            ),
           ],
         ),
       ),

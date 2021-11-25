@@ -1,4 +1,7 @@
-#Sat Nov 13 02:11:56 KST 2021
+#Thu Nov 25 22:14:32 KST 2021
 base.0=D\:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.1=classes2.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=D\:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes2.dex

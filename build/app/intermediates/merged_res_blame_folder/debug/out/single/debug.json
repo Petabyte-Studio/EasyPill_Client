@@ -4,16 +4,16 @@
         "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
+        "merged": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\res\\merged\\debug\\drawable_launch_background.xml.flat",
+        "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\drawable\\launch_background.xml"
+    },
+    {
         "merged": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
         "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
         "merged": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\res\\merged\\debug\\drawable-v21_launch_background.xml.flat",
         "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\drawable-v21\\launch_background.xml"
-    },
-    {
-        "merged": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\res\\merged\\debug\\drawable_launch_background.xml.flat",
-        "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\drawable\\launch_background.xml"
     },
     {
         "merged": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",

@@ -18,7 +18,7 @@ class _ProductView extends State<ProductView> {
   }
 
   void getJSONData() async {
-    var url = 'http://127.0.0.1:8000/product';
+    var url = 'http://10.0.2.2:8000/product';
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
