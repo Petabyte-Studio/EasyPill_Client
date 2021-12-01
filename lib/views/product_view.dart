@@ -9,16 +9,22 @@ class ProductView extends StatefulWidget {
 class _ProductView extends State<ProductView> {
   String test = 'Before Add';
   List? data;
-
+  var category;
   @override
   void initState() {
     super.initState();
     data = List.empty(growable: true);
-    getJSONData();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        category = ModalRoute.of(context)!.settings.arguments;
+        getJSONData(category);
+      });
+    });
   }
 
-  void getJSONData() async {
-    var url = 'http://10.0.2.2:8000/product';
+  void getJSONData(var category) async {
+    var url = 'http://127.0.0.1:8000/product/?search_fields=category&search=' +
+        category;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -30,7 +36,16 @@ class _ProductView extends State<ProductView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product List'),
+        title: Text(category ?? '로딩 중..'),
+        bottom: PreferredSize(
+          child: Container(
+            color: const Color(0xFFF1F1F1),
+            height: 0.7,
+          ),
+          preferredSize: const Size.fromHeight(0.7),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
       ),
       body: Container(
         child: data!.length == 0
@@ -51,7 +66,8 @@ class _ProductView extends State<ProductView> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.of(context).pushNamed('/detail',
+                      Navigator.of(context).pushNamed(
+                          '/category/product/detail',
                           arguments: data![index]['id'].toString());
                     },
                   );
