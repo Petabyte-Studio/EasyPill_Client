@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/category_card_widget.dart';
+import '../data/category.dart';
 
 class CategoryView extends StatefulWidget {
   @override
@@ -7,22 +8,17 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryView extends State<CategoryView> {
-  Map<String, String> categoryList = {
-    '비타민C': 'Vitamin-C',
-    '비타민B': 'Vitamin-B',
-    '비타민D': 'Vitamin-D',
-    '멀티비타민': 'Multi-Vitamin',
-    '아르기닌': 'L-arginine',
-    '홍삼': 'Red ginseng',
-    '프로폴리스': 'Propolis',
-    '기타': 'Extras',
-  };
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('영양제 선택'),
+        title: const Text(
+          '영양제 선택',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -36,9 +32,9 @@ class _CategoryView extends State<CategoryView> {
       body: Container(
         child: ListView.builder(
           itemBuilder: (context, index) => CategoryCard(
-              categoryList.keys.elementAt(index),
-              categoryList.values.elementAt(index)),
-          itemCount: categoryList.length,
+              Category.categoryList.keys.elementAt(index),
+              Category.categoryList.values.elementAt(index)),
+          itemCount: Category.categoryList.length,
         ),
       ),
     );

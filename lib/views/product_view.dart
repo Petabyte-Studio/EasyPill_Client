@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../data/color.dart';
+import '../data/category.dart';
 
 class ProductView extends StatefulWidget {
   State<StatefulWidget> createState() => _ProductView();
@@ -81,7 +81,24 @@ class _ProductView extends State<ProductView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(category ?? '로딩 중..'),
+        title: Column(
+          children: <Widget>[
+            Text(
+              category ?? '로딩 중..',
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              Category.categoryList[category] ?? 'Loading..',
+              style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black.withOpacity(0.4)),
+            )
+          ],
+        ),
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -89,6 +106,11 @@ class _ProductView extends State<ProductView> {
           ),
           preferredSize: const Size.fromHeight(0.7),
         ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
+              onPressed: () => {}),
+        ],
         elevation: 0,
         backgroundColor: Colors.white,
       ),
@@ -138,14 +160,23 @@ class _ProductView extends State<ProductView> {
                                                         FontWeight.w400),
                                               ),
                                               Text(
-                                                (data![index]['avg_rate'] ??
-                                                        0.0)
-                                                    .toStringAsFixed(2),
+                                                '★ ' +
+                                                    (data![index]['avg_rate'] ??
+                                                            0.0)
+                                                        .toStringAsFixed(2),
                                                 style: const TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold,
                                                   color: Color(0xFFFCAF00),
                                                 ),
+                                              ),
+                                              Text(
+                                                (' (' +
+                                                    data![index]
+                                                            ['comment_count']
+                                                        .toString() +
+                                                    ')'),
+                                                style: TextStyle(fontSize: 10),
                                               ),
                                             ],
                                           ),
