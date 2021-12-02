@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:group_button/group_button.dart';
 
 class PurchaseView extends StatefulWidget {
   State<StatefulWidget> createState() => _PurchaseView();
@@ -185,17 +186,11 @@ class _PurchaseView extends State<PurchaseView> {
             margin: EdgeInsets.only(top: 20),
             width: double.infinity,
             child: Divider(color: Color(0xffe7e7e7), thickness: 10.0)),
-        Column(children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(top: 20, left: 20),
-                child: Text('배송지 정보',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-            ],
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 20, left: 20),
+            child: Text('배송지 정보',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ),
           Container(
               width: double.infinity,
@@ -293,7 +288,7 @@ class _PurchaseView extends State<PurchaseView> {
                         child: Text(
                           "우편번호 찾기",
                           style: TextStyle(
-                              color: Color(0xfff19938),
+                              color: Color(0xffff9500),
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                         ),
@@ -394,6 +389,82 @@ class _PurchaseView extends State<PurchaseView> {
             margin: EdgeInsets.only(top: 20),
             width: double.infinity,
             child: Divider(color: Color(0xffe7e7e7), thickness: 10.0)),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 20, left: 20),
+            child: Text('결제수단',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          ),
+          Container(
+              margin: EdgeInsets.all(20),
+              child: GroupButton(
+                mainGroupAlignment: MainGroupAlignment.spaceBetween,
+                spacing: 20,
+                isRadio: true,
+                onSelected: (index, isSelected) => print(
+                    '$index button is ${isSelected ? 'selected' : 'unselected'}'),
+                buttons: [
+                  "신용/체크카드",
+                  "무통장입금",
+                  "휴대폰 결제",
+                ],
+                selectedTextStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                unselectedTextStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+                selectedColor: Color(0xffff9500),
+                unselectedColor: Colors.white,
+                unselectedBorderColor: Color(0xffe7e7e7),
+                borderRadius: BorderRadius.circular(5.0),
+                selectedShadow: <BoxShadow>[
+                  BoxShadow(color: Colors.transparent)
+                ],
+                unselectedShadow: <BoxShadow>[
+                  BoxShadow(color: Colors.transparent)
+                ],
+              )),
+        ]),
+        Container(
+            width: double.infinity,
+            child: Divider(color: Color(0xffe7e7e7), thickness: 10.0)),
+        Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text('위 주문 내용을 확인했으며, 회원 본인은 결제에 동의합니다.',
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Text('구매 조건 확인 및 결제진행 동의 내용 보기',
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                        decoration: TextDecoration.underline)),
+              ),
+            ]),
+        Container(
+            margin: EdgeInsets.fromLTRB(20, 20, 20, 5),
+            child: ConstrainedBox(
+                constraints: BoxConstraints.tightFor(height: 50),
+                child: ElevatedButton(
+                  child: Text(
+                    "결제하기",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: do_nothing,
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF20bca4), elevation: 0),
+                ))),
       ])),
     );
   }
