@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryCard extends StatelessWidget {
-  String? _korCategory;
-  String? _engCategory;
+  String? korCategory;
+  String? engCategory;
+  bool isAccent = false;
+  EdgeInsets? padding;
 
-  CategoryCard(this._korCategory, this._engCategory);
+  CategoryCard(
+      {this.padding,
+      this.korCategory,
+      this.engCategory,
+      this.isAccent = false});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Card(
-        margin: const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
+        margin: padding ??
+            const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
-        color: Color(0xFFF8F9FA),
+        color:
+            isAccent ? Color(0xFF6FCF97).withOpacity(0.1) : Color(0xFFF8F9FA),
         elevation: 0,
         child: Container(
           alignment: Alignment.centerLeft,
@@ -25,27 +33,34 @@ class CategoryCard extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                _korCategory ?? '로딩 중..',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                korCategory ?? '로딩 중..',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isAccent ? Color(0xFF6FCF97) : Colors.black),
               ),
               const SizedBox(width: 10),
-              Text(
-                _engCategory ?? 'Loading..',
-                style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF959596)),
-              ),
+              engCategory != null
+                  ? Text(
+                      engCategory ?? 'Loading..',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              isAccent ? Color(0xFF6FCF97) : Color(0xFF959596)),
+                    )
+                  : Text(''),
               const Spacer(),
-              SvgPicture.asset('assets/images/rightArrow.svg',
-                  width: 13, height: 13, color: Color(0xFF123123)),
+              Icon(Icons.arrow_forward_ios,
+                  size: 15,
+                  color: isAccent ? Color(0xFF6FCF97) : Color(0xFF1D1D1B)),
             ],
           ),
         ),
       ),
       onTap: () {
         Navigator.of(context)
-            .pushNamed('/category/product', arguments: _korCategory);
+            .pushNamed('/category/product', arguments: korCategory);
       },
     );
   }

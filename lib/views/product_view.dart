@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:badges/badges.dart';
+import 'dart:convert';
 import '../data/category.dart';
 
 class ProductView extends StatefulWidget {
@@ -11,6 +12,7 @@ class _ProductView extends State<ProductView> {
   String test = 'Before Add';
   List? data;
   int sortMethod = 0;
+  int basketCount = 0;
   List<String> sortMethodList = ['name', 'avg_rate', 'created_at', 'price'];
   var category;
 
@@ -21,7 +23,8 @@ class _ProductView extends State<ProductView> {
     Future.delayed(Duration.zero, () {
       setState(() {
         category = ModalRoute.of(context)!.settings.arguments;
-        getJSONData(category);
+
+        getJSONData(category == '전체보기' ? '' : category);
       });
     });
   }
@@ -47,13 +50,15 @@ class _ProductView extends State<ProductView> {
             color: sortMethod == index ? Color(0xFF6FCF97) : Color(0xFFADB5BD)),
       ),
       backgroundColor: const Color(0xFFF5F5F5),
+      pressElevation: 0,
+      selectedColor: const Color(0xFF6FCF97).withOpacity(0.1),
       selected: sortMethod == index,
       onSelected: (bool selected) {
         if (index != sortMethod) {
           setState(() {
             sortMethod = index;
             data = [];
-            getJSONData(category);
+            getJSONData(category == '전체보기' ? '' : category);
           });
         }
       },
@@ -61,20 +66,25 @@ class _ProductView extends State<ProductView> {
   }
 
   Widget sortChipWrap() {
-    return Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-          padding: EdgeInsets.only(left: 16, bottom: 12),
-          child: Wrap(
-            spacing: 12,
-            children: <Widget>[
-              sortChip(0, '이름순'),
-              sortChip(1, '인기순'),
-              sortChip(2, '최신순'),
-              sortChip(3, '가격순'),
-            ],
+    return Column(
+      children: <Widget>[
+        Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 16),
+            child: Wrap(
+              spacing: 12,
+              children: <Widget>[
+                sortChip(0, '이름순'),
+                sortChip(1, '인기순'),
+                sortChip(2, '최신순'),
+                sortChip(3, '가격순'),
+              ],
+            ),
           ),
-        ));
+        ),
+      ],
+    );
   }
 
   @override
@@ -107,9 +117,21 @@ class _ProductView extends State<ProductView> {
           preferredSize: const Size.fromHeight(0.7),
         ),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
-              onPressed: () => {}),
+          Badge(
+            badgeContent: Text(
+              basketCount.toString(),
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
+            child: IconButton(
+                icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
+                onPressed: () => {setState(() => basketCount++)}),
+            animationType: BadgeAnimationType.scale,
+            showBadge: basketCount > 0,
+            elevation: 0,
+            badgeColor: Color(0xFFFF9500),
+            ignorePointer: true,
+            position: BadgePosition.topEnd(top: 5, end: 5),
+          ),
         ],
         elevation: 0,
         backgroundColor: Colors.white,

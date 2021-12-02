@@ -29,13 +29,22 @@ class _CategoryView extends State<CategoryView> {
         elevation: 0,
         backgroundColor: Colors.white,
       ),
-      body: Container(
-        child: ListView.builder(
-          itemBuilder: (context, index) => CategoryCard(
-              Category.categoryList.keys.elementAt(index),
-              Category.categoryList.values.elementAt(index)),
-          itemCount: Category.categoryList.length,
-        ),
+      body: ListView(
+        children: <Widget>[
+          CategoryCard(
+            korCategory: '전체보기',
+            isAccent: true,
+            padding: EdgeInsets.only(left: 16, right: 16, top: 15, bottom: 24),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemBuilder: (context, index) => CategoryCard(
+                korCategory: Category.categoryList.keys.elementAt(index),
+                engCategory: Category.categoryList.values.elementAt(index)),
+            itemCount: Category.categoryList.length,
+          ),
+        ],
       ),
     );
   }
