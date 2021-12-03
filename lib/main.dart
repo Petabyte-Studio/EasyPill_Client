@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'EasyPill',
         theme: ThemeData(
-          primarySwatch: createMaterialColor(const Color(0xFF20bca4)),
+          primarySwatch: createMaterialColor(const Color(0xFF6FCF97)),
           scaffoldBackgroundColor: const Color(0xFFFFFFFF),
         ),
         initialRoute: '/',

@@ -40,9 +40,9 @@ class _CategoryView extends State<CategoryView> {
             shrinkWrap: true,
             physics: const ScrollPhysics(),
             itemBuilder: (context, index) => CategoryCard(
-                korCategory: Category.categoryList.keys.elementAt(index),
-                engCategory: Category.categoryList.values.elementAt(index)),
-            itemCount: Category.categoryList.length,
+                korCategory: Category.categoryList.keys.elementAt(index + 1),
+                engCategory: Category.categoryList.values.elementAt(index + 1)),
+            itemCount: Category.categoryList.length - 1,
           ),
         ],
       ),
