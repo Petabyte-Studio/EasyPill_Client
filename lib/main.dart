@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'views/product_view.dart';
 import 'views/setting_view.dart';
 import 'views/detail_view.dart';
+import 'views/category_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,14 +40,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'EasyPill',
         theme: ThemeData(
-          primarySwatch: createMaterialColor(Color(0xFF20bca4)),
+          primarySwatch: createMaterialColor(const Color(0xFF20bca4)),
+          scaffoldBackgroundColor: const Color(0xFFFFFFFF),
         ),
         initialRoute: '/',
         routes: {
           '/': (context) => MainPage(),
-          '/product': (context) => ProductView(),
+          '/category': (context) => CategoryView(),
+          '/category/product': (context) => ProductView(),
+          '/category/product/detail': (context) => DetailView(),
           '/setting': (context) => SettingView(),
-          '/detail': (context) => DetailView(),
           // '/detail' :
         });
   }
@@ -70,7 +73,7 @@ class _MainPageState extends State<MainPage> {
           ElevatedButton(
               child: Text('Product'),
               onPressed: () {
-                Navigator.of(context).pushNamed('/product');
+                Navigator.of(context).pushNamed('/category');
               }),
           ElevatedButton(
               child: Text('Setting'),
