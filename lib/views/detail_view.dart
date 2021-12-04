@@ -301,7 +301,7 @@ class _DetailView extends State<DetailView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      comments![index]['user'].toString(),
+                                      comments[index]['user'].toString(),
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.black.withOpacity(0.6),
@@ -350,7 +350,7 @@ class _DetailView extends State<DetailView> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  itemCount: comments!.length < 5 ? comments.length : 5,
+                  itemCount: comments.length < 5 ? comments.length : 5,
                 )
               : Text(
                   '작성된 리뷰가 없습니다.',
@@ -390,6 +390,7 @@ class _DetailView extends State<DetailView> {
       backgroundColor: Color(0xFF6FCF97),
       appBar: AppBar(
         elevation: 0,
+        centerTitle: true,
         backgroundColor: Color(0x00000000),
         iconTheme: IconThemeData(
           color: Colors.black.withOpacity(0.8),

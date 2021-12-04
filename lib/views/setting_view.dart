@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,6 +16,7 @@ class _SettingViewState extends State<SettingView> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   String? userEmail;
+  Map<String, dynamic> userInfo = <String, dynamic>{};
 
   @override
   void initState() {
@@ -43,6 +47,30 @@ class _SettingViewState extends State<SettingView> {
         print('User is now logged in\n');
       }
     });
+  }
+
+  void getUserData() async {
+    var url = 'http://127.0.0.1:8000/user/?search=' +
+        (auth.currentUser?.uid.toString() ?? '');
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
+      userInfo = dataFromJSON[0];
+    });
+  }
+
+  void postUserData() async {
+    var url = 'http://127.0.0.1:8000/user/';
+    http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'uid': auth.currentUser?.uid.toString() ?? 'null',
+        'name': 'TEST MAN'
+      }),
+    );
   }
 
   @override
@@ -76,11 +104,29 @@ class _SettingViewState extends State<SettingView> {
                     });
                   },
                 ),
+                ElevatedButton(
+                    child: Text('GET'),
+                    onPressed: () {
+                      getUserData();
+                    }),
+                ElevatedButton(
+                    child: Text('POST'),
+                    onPressed: () {
+                      postUserData();
+                    }),
               ],
             ),
             TextField(controller: emailText),
             TextField(obscureText: true, controller: passwordText),
             Text(userEmail ?? 'Signed Out'),
+            Text(
+                '============================\nUSER INFO FROM DJANGO SERVER\n============================'),
+            Text(userInfo['uid'].toString()),
+            Text(userInfo['name'].toString()),
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(userInfo['image'] ?? ''),
+            ),
           ],
         ),
       ),

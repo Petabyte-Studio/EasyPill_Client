@@ -19,6 +19,7 @@ class _CategoryView extends State<CategoryView> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),

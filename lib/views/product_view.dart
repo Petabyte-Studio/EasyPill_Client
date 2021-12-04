@@ -109,6 +109,7 @@ class _ProductView extends State<ProductView> {
             )
           ],
         ),
+        centerTitle: true,
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
