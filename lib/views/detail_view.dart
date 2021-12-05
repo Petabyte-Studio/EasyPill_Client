@@ -265,21 +265,27 @@ class _DetailView extends State<DetailView> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  title ?? '',
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+            child: GestureDetector(
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      title ?? '',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                      color: Colors.black.withOpacity(0.7),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 18,
-                  color: Colors.black.withOpacity(0.7),
-                ),
-              ],
-            ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                      '/category/product/detail/comment',
+                      arguments: detail['id'].toString());
+                }),
           ),
           if (comments != null)
             comments.isNotEmpty

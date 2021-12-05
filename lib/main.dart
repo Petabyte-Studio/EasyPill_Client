@@ -5,6 +5,7 @@ import 'views/setting_view.dart';
 import 'views/detail_view.dart';
 import 'views/category_view.dart';
 import 'views/funny_view.dart';
+import 'views/comment_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           '/category': (context) => CategoryView(),
           '/category/product': (context) => ProductView(),
           '/category/product/detail': (context) => DetailView(),
+          '/category/product/detail/comment': (context) => CommentView(),
           '/setting': (context) => SettingView(),
           '/funny': (context) => FunnyView(),
           // '/detail' :

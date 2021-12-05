@@ -13,7 +13,13 @@ class _ProductView extends State<ProductView> {
   List? data;
   int sortMethod = 0;
   int basketCount = 0;
-  List<String> sortMethodList = ['name', 'avg_rate', 'created_at', 'price'];
+  List<String> sortMethodList = [
+    'name',
+    '-comment_count',
+    'created_at',
+    'price',
+    '-avg_rate',
+  ];
   var category;
 
   @override
@@ -80,6 +86,7 @@ class _ProductView extends State<ProductView> {
                 sortChip(1, '인기순'),
                 sortChip(2, '최신순'),
                 sortChip(3, '가격순'),
+                sortChip(4, '평점순'),
               ],
             ),
           ),
