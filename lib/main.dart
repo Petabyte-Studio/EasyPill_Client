@@ -4,6 +4,7 @@ import 'views/product_view.dart';
 import 'views/setting_view.dart';
 import 'views/detail_view.dart';
 import 'views/category_view.dart';
+import 'views/funny_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
           '/category/product': (context) => ProductView(),
           '/category/product/detail': (context) => DetailView(),
           '/setting': (context) => SettingView(),
+          '/funny': (context) => FunnyView(),
           // '/detail' :
         });
   }
@@ -79,6 +81,11 @@ class _MainPageState extends State<MainPage> {
               child: Text('Setting'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/setting');
+              }),
+          ElevatedButton(
+              child: Text('Funny'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/funny');
               }),
         ],
       ),

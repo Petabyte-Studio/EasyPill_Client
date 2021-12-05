@@ -12,7 +12,7 @@ class _DetailView extends State<DetailView> {
   var id;
 
   void getJSONDataFromID(String query) async {
-    var url = 'http://127.0.0.1:8000/product/' + query;
+    var url = 'http://192.168.0.103:8000/product/' + query;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -141,7 +141,8 @@ class _DetailView extends State<DetailView> {
               ],
             ),
           ),
-          for (Widget card in children!) card,
+          if (children != null)
+            for (Widget card in children) card,
         ],
       ),
     );
@@ -280,86 +281,89 @@ class _DetailView extends State<DetailView> {
               ],
             ),
           ),
-          comments!.isNotEmpty
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemBuilder: (context, index) => Container(
-                    child: Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 20,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 6),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      comments[index]['user'].toString(),
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black.withOpacity(0.6),
-                                      ),
-                                    ),
-                                    Text(
-                                      '★' + comments[index]['rate'].toString(),
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFFCAF00),
-                                      ),
-                                    ),
-                                  ],
+          if (comments != null)
+            comments.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemBuilder: (context, index) => Container(
+                      child: Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                CircleAvatar(
+                                  radius: 20,
                                 ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                comments[index]['created_at']
-                                    .toString()
-                                    .substring(0, 10),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 6),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        comments[index]['user'].toString(),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black.withOpacity(0.6),
+                                        ),
+                                      ),
+                                      Text(
+                                        '★' +
+                                            comments[index]['rate'].toString(),
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFFCAF00),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  comments[index]['created_at']
+                                      .toString()
+                                      .substring(0, 10),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black.withOpacity(0.6),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Flexible(
+                              child: Text(
+                                comments[index]['comment'].toString(),
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.black.withOpacity(0.6),
                                 ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Flexible(
-                            child: Text(
-                              comments[index]['comment'].toString(),
-                              style: TextStyle(
-                                fontSize: 12,
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      margin: EdgeInsets.only(bottom: 16),
+                      width: double.infinity,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF9F9F9),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    margin: EdgeInsets.only(bottom: 16),
-                    width: double.infinity,
-                    height: 130,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF9F9F9),
-                      borderRadius: BorderRadius.circular(8),
+                    itemCount: comments.length < 5 ? comments.length : 5,
+                  )
+                : Text(
+                    '작성된 리뷰가 없습니다.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF6FCF97),
                     ),
                   ),
-                  itemCount: comments.length < 5 ? comments.length : 5,
-                )
-              : Text(
-                  '작성된 리뷰가 없습니다.',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF6FCF97),
-                  ),
-                ),
           // ListView(
           //   shrinkWrap: true,
           //   physics: const ScrollPhysics(),
@@ -520,8 +524,10 @@ class _DetailView extends State<DetailView> {
                     Positioned(
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: Image.network(detail['image'].toString(),
-                            width: 180, fit: BoxFit.contain),
+                        child: CircleAvatar(
+                          radius: 90,
+                          backgroundImage: NetworkImage(detail['image'] ?? ''),
+                        ),
                       ),
                     ),
                   ],

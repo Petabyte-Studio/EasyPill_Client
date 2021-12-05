@@ -30,10 +30,11 @@ class _ProductView extends State<ProductView> {
   }
 
   void getJSONData(var category) async {
-    var url = 'http://127.0.0.1:8000/product/?search_fields=category&search=' +
-        category +
-        '&ordering=' +
-        sortMethodList[sortMethod];
+    var url =
+        'http://192.168.0.103:8000/product/?search_fields=category&search=' +
+            category +
+            '&ordering=' +
+            sortMethodList[sortMethod];
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
