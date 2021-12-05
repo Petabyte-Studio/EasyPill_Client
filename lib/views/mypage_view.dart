@@ -32,6 +32,23 @@ class _MypageViewState extends State<MypageView> {
     });
   }
 
+  void settingEntryTap(int settingID) {
+    print(settingID);
+    switch(settingID){
+      case 1: Navigator.of(context).pushNamed('/mypage/subscribe'); break;
+      case 2: Navigator.pop(context); break;
+      case 3: break;
+      case 4: break;
+      case 5:
+        logout();
+        setState(() {
+          userEmail = null;
+        });
+        Navigator.pop(context);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +127,7 @@ class _MypageViewState extends State<MypageView> {
               ),
             ),
             
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
@@ -119,8 +136,32 @@ class _MypageViewState extends State<MypageView> {
                     "구독중인 영양제",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
                   ),
+
                 ],
               )
+            ),
+
+            SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  // Text('subcribe list'),
+                  SizedBox(
+                    // you may want to use an aspect ratio here for tablet support
+                    height: 100.0,
+                    child: PageView.builder(
+                      padEnds: false,
+                      itemCount: 5,
+                      // store this controller in a State to save the carousel scroll position
+                      controller: PageController(viewportFraction: 0.55),
+                      itemBuilder: (BuildContext context, int index) {
+                        return _buildCarouselItem(context, index);
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
 
             Container(
@@ -157,57 +198,53 @@ class _MypageViewState extends State<MypageView> {
     );
   }
 
-  void settingEntryTap(int settingID) {
-    print(settingID);
-    switch(settingID){
-      case 1: Navigator.of(context).pushNamed('/mypage/subscribe'); break;
-      case 2: Navigator.pop(context); break;
-      case 3: break;
-      case 4: break;
-      case 5:
-        logout();
-        setState(() {
-          userEmail = null;
-        });
-        Navigator.pop(context);
-        break;
-    }
+  Widget _buildCarouselItem(BuildContext context, int index) {
+    var left_margin = 10.0;
+    if(index == 0) left_margin = 20.0;
+    var card = Container(
+      margin: EdgeInsets.only(left: left_margin),
+      child: Text("구독제품 test card $index"),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      ),
+    );
+    return card;
   }
 
   GestureDetector buildSettingRow(BuildContext context, String title, int settingID) {
     return GestureDetector(
-                // onTap : () => settingEntryTap(settingID),
-                onTap: (){
-                  settingEntryTap(settingID);
-                  if(settingID==3 || settingID==4){
-                    showDialog(
-                      context: context, builder: (BuildContext context){
-                        return AlertDialog(
-                          title: Text(title),
-                          content: Text("준비중입니다")
-                        );
-                    });
-                  }
-                  
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 45),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        // style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors(0xffffffff))
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 15.0,
-                        color: Colors.grey,
-                      )
-                    ],
-                  ),
-                ),
+      // onTap : () => settingEntryTap(settingID),
+      onTap: (){
+        settingEntryTap(settingID);
+        if(settingID==3 || settingID==4){
+          showDialog(
+            context: context, builder: (BuildContext context){
+              return AlertDialog(
+                title: Text(title),
+                content: Text("준비중입니다")
               );
+          });
+        }
+        
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(top: 45),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 15.0,
+              color: Colors.grey,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
