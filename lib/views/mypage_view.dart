@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MypageView extends StatefulWidget {
   @override
@@ -10,23 +12,37 @@ class MypageView extends StatefulWidget {
 class _MypageViewState extends State<MypageView> {
   FirebaseAuth auth = FirebaseAuth.instance;
   String? userEmail;
-
-  // test@test.com
-  // 123123123
+  Map<String, dynamic> userInfo = <String, dynamic>{};
 
   @override
   void initState() {
     super.initState();
     userEmail = auth.currentUser?.email.toString();
+    getUserData();
   }
 
   void logout() async => await auth.signOut();
+
+  void getUserData() async {
+    var url = 'http://127.0.0.1:8000/user/?search='+(auth.currentUser?.uid.toString() ?? '');
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
+      userInfo = dataFromJSON[0];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('마이페이지'),
+        title: Text(
+          '마이페이지',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -52,7 +68,7 @@ class _MypageViewState extends State<MypageView> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage("https://jejuhydrofarms.com/wp-content/uploads/2020/05/blank-profile-picture-973460_1280.png")
+                        image: NetworkImage(userInfo['image'] ?? '')
                       )
                     )
                   ),
@@ -68,8 +84,8 @@ class _MypageViewState extends State<MypageView> {
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        Icons.camera_alt,
-                        size: 15.0,
+                        Icons.edit,
+                        size: 16.0,
                         color: Colors.white,
                       )
                     )
@@ -82,7 +98,7 @@ class _MypageViewState extends State<MypageView> {
                 children: [
                   SizedBox(height: 15),
                   Text(
-                    "김숭실",
+                    userInfo['name'].toString(),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(height: 5),
@@ -144,8 +160,7 @@ class _MypageViewState extends State<MypageView> {
   void settingEntryTap(int settingID) {
     print(settingID);
     switch(settingID){
-      // Navigator.of(context).pushNamed('/');
-      case 1: Navigator.pop(context); break;
+      case 1: Navigator.of(context).pushNamed('/mypage/subscribe'); break;
       case 2: Navigator.pop(context); break;
       case 3: break;
       case 4: break;
