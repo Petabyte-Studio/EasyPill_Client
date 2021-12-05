@@ -13,6 +13,10 @@ class _MypageViewState extends State<MypageView> {
   FirebaseAuth auth = FirebaseAuth.instance;
   String? userEmail;
   Map<String, dynamic> userInfo = <String, dynamic>{};
+  Map<String, dynamic> productInfo = <String, dynamic>{};
+
+  bool? isNothing;
+  int? subscribeCnt;
 
   @override
   void initState() {
@@ -29,7 +33,30 @@ class _MypageViewState extends State<MypageView> {
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
       userInfo = dataFromJSON[0];
+      print(userInfo['subscriptions']);
+      // subscribeCnt = userInfo['subscriptions'] == null ? 1 : userInfo['subscriptions'].length;
+      subscribeCnt=userInfo['subscriptions'].length;
+      if(subscribeCnt == 0) isNothing = true;
     });
+    // getSubscriptionInfo();
+  }
+
+  // void getSubscriptionInfo() async{
+  //   print("Num of subscription : $subscribeCnt");
+  //   for(int i=0; i<subscribeCnt!; ++i){
+  //     print(i);
+  //     getProductData(userInfo['subscriptions'][i]['product'].toString(), i);
+  //   }
+  // }
+
+  void getProductData(String pid, int i) async {
+    var url = 'http://127.0.0.1:8000/product/'+pid;
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
+      productInfo = dataFromJSON;
+    });
+
   }
 
   void settingEntryTap(int settingID) {
@@ -136,7 +163,6 @@ class _MypageViewState extends State<MypageView> {
                     "구독중인 영양제",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
                   ),
-
                 ],
               )
             ),
@@ -146,20 +172,7 @@ class _MypageViewState extends State<MypageView> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  // Text('subcribe list'),
-                  SizedBox(
-                    // you may want to use an aspect ratio here for tablet support
-                    height: 100.0,
-                    child: PageView.builder(
-                      padEnds: false,
-                      itemCount: 5,
-                      // store this controller in a State to save the carousel scroll position
-                      controller: PageController(viewportFraction: 0.55),
-                      itemBuilder: (BuildContext context, int index) {
-                        return _buildCarouselItem(context, index);
-                      },
-                    ),
-                  )
+                  subscribeCardArea()
                 ],
               ),
             ),
@@ -198,15 +211,61 @@ class _MypageViewState extends State<MypageView> {
     );
   }
 
-  Widget _buildCarouselItem(BuildContext context, int index) {
+  SizedBox subscribeCardArea() {
+    if(isNothing == true){
+      print("nothing exist");
+      return SizedBox(
+        child: Container(
+          padding: const EdgeInsets.only(left: 20),
+          child: Row(
+            children: [
+              Text(
+                "구독중인 영양제가 없습니다",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+              ),
+            ],
+          )
+        ),
+      );
+    }
+    else{
+      return SizedBox(
+        height: 100.0,
+        child: PageView.builder(
+          padEnds: false,
+          itemCount: subscribeCnt,
+          controller: PageController(viewportFraction: 0.55),
+          itemBuilder: (BuildContext context, int index) {
+            return buildCardItem(context, index);
+          },
+        ),
+      );
+    }
+  }
+
+  Widget buildCardItem(BuildContext context, int index) {
     var left_margin = 10.0;
     if(index == 0) left_margin = 20.0;
+
     var card = Container(
       margin: EdgeInsets.only(left: left_margin),
-      child: Text("구독제품 test card $index"),
+      child: Column(
+        children: [
+          Text(
+            "subscription info #$index",
+          ),
+          Text(
+            userInfo['subscriptions'][index]['product'].toString(),
+          ),
+          Text(
+            userInfo['subscriptions'][index]['start_at'].toString().substring(0, 10),
+          ),
+          
+        ]
+      ),
       decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        color: Color(0xFF999999), // 0xFFF9F9F9
+        borderRadius: BorderRadius.circular(8),
       ),
     );
     return card;
