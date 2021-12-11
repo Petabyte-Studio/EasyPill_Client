@@ -8,11 +8,23 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailView extends State<DetailView> {
-  Map<String, dynamic> detail = <String, dynamic>{};
-  var id;
+  final List<String> _gridText = ["구매자 중 가 만족했어요!", "별점이 높은 제품 " + "/ 5"];
+  final List<Color> _gridTextColor = [
+    const Color(0xFFAE4343),
+    const Color(0xFF437BAE)
+  ];
+  final List<Color> _gridColor = [
+    const Color(0xFFFFDFDF),
+    const Color(0xFFF0F5FF)
+  ];
 
-  void getJSONDataFromID(String query) async {
-    var url = 'http://192.168.0.103:8000/product/' + query;
+  Map<String, dynamic> detail = <String, dynamic>{};
+  String? productID;
+
+  void getJSONDataFromID(String? query) async {
+    if (query == null) return;
+
+    var url = 'http://127.0.0.1:8000/product/' + query;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -28,8 +40,8 @@ class _DetailView extends State<DetailView> {
     // otherwise it would be skipped and args would return null
     Future.delayed(Duration.zero, () {
       setState(() {
-        id = ModalRoute.of(context)!.settings.arguments;
-        getJSONDataFromID(id);
+        productID = ModalRoute.of(context)!.settings.arguments.toString();
+        getJSONDataFromID(productID);
       });
     });
   }
@@ -263,9 +275,11 @@ class _DetailView extends State<DetailView> {
       margin: const EdgeInsets.only(left: 20, right: 20),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: GestureDetector(
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 16, top: 16),
                 child: Row(
                   children: <Widget>[
                     Text(
@@ -281,11 +295,13 @@ class _DetailView extends State<DetailView> {
                     ),
                   ],
                 ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(
-                      '/category/product/detail/comment',
-                      arguments: detail['id'].toString());
-                }),
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                    '/category/product/detail/comment',
+                    arguments: detail['id'].toString());
+              },
+            ),
           ),
           if (comments != null)
             comments.isNotEmpty
@@ -503,16 +519,11 @@ class _DetailView extends State<DetailView> {
                             const SizedBox(height: 38),
                             horizontalGrid(
                               children: <Widget>[
-                                gridObject(
-                                  backgroundColor: Color(0xFFFFDFDF),
-                                  title: '구매자 중\n90%가\n만족했어요!',
-                                  textColor: Color(0xFFAE4343),
-                                ),
-                                gridObject(
-                                  backgroundColor: Color(0xFFF0F5FF),
-                                  title: '별점이 높은\n제품\n9.2 / 10',
-                                  textColor: Color(0xFF437BAE),
-                                ),
+                                for (int i = 0; i < _gridText.length; i++)
+                                  gridObject(
+                                      backgroundColor: _gridColor[i],
+                                      title: _gridText[i],
+                                      textColor: _gridTextColor[i]),
                               ],
                             ),
                             const SizedBox(height: 50),
@@ -532,7 +543,9 @@ class _DetailView extends State<DetailView> {
                         alignment: Alignment.topCenter,
                         child: CircleAvatar(
                           radius: 90,
-                          backgroundImage: NetworkImage(detail['image'] ?? ''),
+                          backgroundImage: detail['image'] != null
+                              ? NetworkImage(detail['image'])
+                              : null,
                         ),
                       ),
                     ),
@@ -576,13 +589,3 @@ class _DetailView extends State<DetailView> {
     );
   }
 }
-
-// Text('Price# ' + detail['price'].toString()),
-// Text('Rate# ' +
-//     (detail['avg_rate'] ?? 0.0).toStringAsFixed(2)),
-// Text('\n\nComments\n===================='),
-// if (detail['comments'] == null)
-//   Text('댓글 없음')
-// else
-//   for (var i in detail['comments'])
-//     Text(i['user'] + ': ' + i['comment']),

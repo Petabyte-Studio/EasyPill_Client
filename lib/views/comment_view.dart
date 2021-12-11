@@ -26,7 +26,7 @@ class _CommentView extends State<CommentView> {
   }
 
   void getJSONDataFromID(String query) async {
-    var url = 'http://192.168.0.103:8000/product/' + query;
+    var url = 'http://127.0.0.1:8000/product/' + query;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
