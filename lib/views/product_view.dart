@@ -13,7 +13,13 @@ class _ProductView extends State<ProductView> {
   List? data;
   int sortMethod = 0;
   int basketCount = 0;
-  List<String> sortMethodList = ['name', 'avg_rate', 'created_at', 'price'];
+  List<String> sortMethodList = [
+    'name',
+    '-comment_count',
+    'created_at',
+    'price',
+    '-avg_rate',
+  ];
   var category;
 
   @override
@@ -79,6 +85,7 @@ class _ProductView extends State<ProductView> {
                 sortChip(1, '인기순'),
                 sortChip(2, '최신순'),
                 sortChip(3, '가격순'),
+                sortChip(4, '평점순'),
               ],
             ),
           ),
@@ -109,6 +116,7 @@ class _ProductView extends State<ProductView> {
             )
           ],
         ),
+        centerTitle: true,
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -125,7 +133,6 @@ class _ProductView extends State<ProductView> {
             child: IconButton(
                 icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
                 onPressed: () => {setState(() => basketCount++)}),
-            animationType: BadgeAnimationType.scale,
             showBadge: basketCount > 0,
             elevation: 0,
             badgeColor: Color(0xFFFF9500),
@@ -149,87 +156,101 @@ class _ProductView extends State<ProductView> {
                   : ListView.builder(
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          child: ListTile(
-                            title: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Column(
+                                  mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
-                                    Image.network(
-                                        data![index]['image'].toString(),
-                                        width: 48,
-                                        fit: BoxFit.contain),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 19),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: <Widget>[
+                                        Image.network(
+                                            data![index]['image'].toString(),
+                                            width: 48,
+                                            fit: BoxFit.contain),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 19),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: <Widget>[
-                                              Text(
-                                                data![index]['company']
-                                                        .toString() +
-                                                    ' • ',
-                                                style: TextStyle(
-                                                    color: Colors.black
-                                                        .withOpacity(0.4),
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w400),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text(
+                                                    data![index]['company']
+                                                            .toString() +
+                                                        ' • ',
+                                                    style: TextStyle(
+                                                        color: Colors.black
+                                                            .withOpacity(0.4),
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                  Text(
+                                                    '★ ' +
+                                                        (data![index][
+                                                                    'avg_rate'] ??
+                                                                0.0)
+                                                            .toStringAsFixed(2),
+                                                    style: const TextStyle(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color(0xFFFCAF00),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    (' (' +
+                                                        data![index][
+                                                                'comment_count']
+                                                            .toString() +
+                                                        ')'),
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                '★ ' +
-                                                    (data![index]['avg_rate'] ??
-                                                            0.0)
-                                                        .toStringAsFixed(2),
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color(0xFFFCAF00),
+                                              Container(
+                                                width: 200,
+                                                padding: const EdgeInsets.only(
+                                                    top: 8),
+                                                child: Text(
+                                                  data![index]['name']
+                                                      .toString(),
+                                                  overflow: TextOverflow.fade,
+                                                  maxLines: 1,
+                                                  softWrap: false,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                              ),
-                                              Text(
-                                                (' (' +
-                                                    data![index]
-                                                            ['comment_count']
-                                                        .toString() +
-                                                    ')'),
-                                                style: TextStyle(fontSize: 10),
                                               ),
                                             ],
                                           ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 8),
-                                            child: Text(
-                                              data![index]['name'].toString(),
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      data![index]['price'].toString() + '원',
-                                      style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xFF515151),
-                                          fontWeight: FontWeight.bold),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          data![index]['price'].toString() +
+                                              '원',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Color(0xFF515151),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                                const Divider(
-                                    height: 20, color: Color(0xFFF1F1F1)),
-                              ],
-                            ),
+                              ),
+                              const Divider(
+                                  height: 10, color: Color(0xFFF1F1F1)),
+                            ],
                           ),
                           onTap: () {
                             Navigator.of(context).pushNamed(

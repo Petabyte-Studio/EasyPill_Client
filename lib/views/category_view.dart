@@ -19,6 +19,7 @@ class _CategoryView extends State<CategoryView> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -40,9 +41,9 @@ class _CategoryView extends State<CategoryView> {
             shrinkWrap: true,
             physics: const ScrollPhysics(),
             itemBuilder: (context, index) => CategoryCard(
-                korCategory: Category.categoryList.keys.elementAt(index),
-                engCategory: Category.categoryList.values.elementAt(index)),
-            itemCount: Category.categoryList.length,
+                korCategory: Category.categoryList.keys.elementAt(index + 1),
+                engCategory: Category.categoryList.values.elementAt(index + 1)),
+            itemCount: Category.categoryList.length - 1,
           ),
         ],
       ),
