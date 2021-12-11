@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
@@ -15,8 +16,8 @@ class _MypageViewState extends State<MypageView> {
   String? userEmail;
   Map<String, dynamic> userInfo = <String, dynamic>{};
 
-  bool? isNothing;
-  int? subscribeCnt;
+  bool? isNothing=true;
+  int? subscribeCnt=0;
 
   @override
   void initState() {
@@ -33,10 +34,14 @@ class _MypageViewState extends State<MypageView> {
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
       userInfo = dataFromJSON[0];
+      print("esefs");
       print(userInfo['subscriptions']);
       // subscribeCnt = userInfo['subscriptions'] == null ? 1 : userInfo['subscriptions'].length;
       subscribeCnt=userInfo['subscriptions'].length;
-      if(userInfo['subscriptions']==null || subscribeCnt==0) isNothing = true;
+      if(subscribeCnt != 0){
+        isNothing = false;
+      }
+      // if(userInfo['subscriptions']==null || subscribeCnt==0) isNothing = true;
     });
   }
 
@@ -69,6 +74,8 @@ class _MypageViewState extends State<MypageView> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white),
         bottom: PreferredSize(
           child: Container(
             color: const Color(0xFFF1F1F1),
@@ -80,9 +87,10 @@ class _MypageViewState extends State<MypageView> {
         backgroundColor: Colors.white,
       ),
       body: Container(
-        padding: const EdgeInsets.only(top: 28),
+        // padding: const EdgeInsets.only(top: 28),
         child: ListView(
           children: [
+            SizedBox(height: 30.0),
             Center(
               child: Stack(
                 children: [
@@ -267,7 +275,7 @@ class _MypageViewState extends State<MypageView> {
                                       ),
                                       SizedBox(height: 5),
                                       SizedBox(
-                                        width: 125.0,
+                                        width: 100.0,
                                         child: Text(
                                           userInfo['subscriptions'][index]['product']['name'].toString(),
                                           maxLines: 1,
@@ -302,7 +310,7 @@ class _MypageViewState extends State<MypageView> {
                   ],
       ),
       decoration: BoxDecoration(
-        color: Color(0XFF9F9F9F), // 0xFFF9F9F9
+        color: Color(0xFFF9F9F9), // 0xFFF9F9F9
         borderRadius: BorderRadius.circular(8),
       ),
     );
