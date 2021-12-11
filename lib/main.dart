@@ -6,6 +6,7 @@ import 'views/detail_view.dart';
 import 'views/category_view.dart';
 import 'views/eat_view.dart';
 import 'views/comment_view.dart';
+import 'views/mypage_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
           '/category/product/detail/comment': (context) => CommentView(),
           '/setting': (context) => SettingView(),
           '/funny': (context) => EatView(),
+          '/mypage': (context) => MypageView(),
           // '/detail' :
         });
   }
@@ -88,6 +90,11 @@ class _MainPageState extends State<MainPage> {
               child: Text('Funny'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/funny');
+              }),
+          ElevatedButton(
+              child: Text('Mypage'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/mypage');
               }),
         ],
       ),
