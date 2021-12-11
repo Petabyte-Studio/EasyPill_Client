@@ -10,14 +10,10 @@ class EatView extends StatefulWidget {
 class _EatView extends State<EatView> {
   final List<String> dateList = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  DateTime _todayDate = DateTime.now();
-  DateTime _calendarDate = DateTime.now();
-  DateTime _selectedDate = DateTime.now();
-  @override
-  void initState() {
-    super.initState();
-    _calendarDate = DateTime(_todayDate.year, _todayDate.month, 1);
-  }
+  DateTime _calendarDate =
+      DateTime(DateTime.now().year, DateTime.now().month, 1);
+  DateTime _selectedDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   Widget calenderSelect({DateTime? selectedTime}) {
     return Container(
@@ -102,32 +98,63 @@ class _EatView extends State<EatView> {
                             ? Flexible(
                                 child: AspectRatio(
                                   aspectRatio: 1,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      (_date).toString(),
-                                      style: const TextStyle(
-                                        color: Color(0xFF8A8A8A),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    margin: EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(11),
-                                      color: input != null
-                                          ? (input[DateTime(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: InkWell(
+                                      splashFactory: NoSplash.splashFactory,
+                                      borderRadius: BorderRadius.circular(11.0),
+                                      child: Ink(
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            (_date).toString(),
+                                            style: const TextStyle(
+                                              color: Color(0xFF8A8A8A),
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(11),
+                                          border: _selectedDate ==
+                                                  DateTime(
                                                       _calendarDate.year,
                                                       _calendarDate.month,
-                                                      _date++)] !=
-                                                  null
-                                              ? Color(0xFF6FCF97).withOpacity(
-                                                  0.3 *
-                                                      input[DateTime(
+                                                      _date)
+                                              ? Border.all(
+                                                  color: Color(0xFF53B175),
+                                                  width: 3,
+                                                )
+                                              : null,
+                                          color: input != null
+                                              ? (input[DateTime(
                                                           _calendarDate.year,
                                                           _calendarDate.month,
-                                                          _date - 1)]!)
-                                              : Color(0xFFF8F9FA))
-                                          : Colors.white,
+                                                          _date++)] !=
+                                                      null
+                                                  ? Color(0xFF6FCF97)
+                                                      .withOpacity(0.3 *
+                                                          input[DateTime(
+                                                              _calendarDate
+                                                                  .year,
+                                                              _calendarDate
+                                                                  .month,
+                                                              _date - 1)]!)
+                                                  : Color(0xFFF8F9FA))
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          _selectedDate = DateTime(
+                                              _calendarDate.year,
+                                              _calendarDate.month,
+                                              i * 7 +
+                                                  j -
+                                                  _calendarDate.weekday);
+                                        });
+                                      },
                                     ),
                                   ),
                                 ),
@@ -291,7 +318,7 @@ class _EatView extends State<EatView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            '${_selectedDate.month}월 ${_selectedDate.month}일 섭취 이력',
+                            '${_selectedDate.month}월 ${_selectedDate.day}일 섭취 이력',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,

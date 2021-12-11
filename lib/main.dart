@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'views/product_view.dart';
+import 'views/product_list_view.dart';
 import 'views/setting_view.dart';
 import 'views/detail_view.dart';
 import 'views/category_view.dart';
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => MainPage(),
           '/category': (context) => CategoryView(),
-          '/category/product': (context) => ProductView(),
+          '/category/product': (context) => ProductListView(),
           '/category/product/detail': (context) => DetailView(),
           '/category/product/detail/comment': (context) => CommentView(),
           '/setting': (context) => SettingView(),

@@ -15,16 +15,17 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Card(
-        margin: padding ??
-            const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        color:
-            isAccent ? Color(0xFF6FCF97).withOpacity(0.1) : Color(0xFFF8F9FA),
-        elevation: 0,
+    return Card(
+      margin: padding ??
+          const EdgeInsets.only(left: 16, right: 16, top: 6, bottom: 6),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      color: isAccent ? Color(0xFF6FCF97).withOpacity(0.1) : Color(0xFFF8F9FA),
+      elevation: 0,
+      child: InkWell(
+        splashFactory: NoSplash.splashFactory,
+        borderRadius: BorderRadius.circular(16.0),
         child: Container(
           alignment: Alignment.centerLeft,
           width: double.infinity,
@@ -57,11 +58,11 @@ class CategoryCard extends StatelessWidget {
             ],
           ),
         ),
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed('/category/product', arguments: korCategory);
+        },
       ),
-      onTap: () {
-        Navigator.of(context)
-            .pushNamed('/category/product', arguments: korCategory);
-      },
     );
   }
 }
