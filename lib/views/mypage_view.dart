@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class MypageView extends StatefulWidget {
   @override
@@ -13,7 +14,6 @@ class _MypageViewState extends State<MypageView> {
   FirebaseAuth auth = FirebaseAuth.instance;
   String? userEmail;
   Map<String, dynamic> userInfo = <String, dynamic>{};
-  Map<String, dynamic> productInfo = <String, dynamic>{};
 
   bool? isNothing;
   int? subscribeCnt;
@@ -36,33 +36,15 @@ class _MypageViewState extends State<MypageView> {
       print(userInfo['subscriptions']);
       // subscribeCnt = userInfo['subscriptions'] == null ? 1 : userInfo['subscriptions'].length;
       subscribeCnt=userInfo['subscriptions'].length;
-      if(subscribeCnt == 0) isNothing = true;
+      if(userInfo['subscriptions']==null || subscribeCnt==0) isNothing = true;
     });
-    // getSubscriptionInfo();
-  }
-
-  // void getSubscriptionInfo() async{
-  //   print("Num of subscription : $subscribeCnt");
-  //   for(int i=0; i<subscribeCnt!; ++i){
-  //     print(i);
-  //     getProductData(userInfo['subscriptions'][i]['product'].toString(), i);
-  //   }
-  // }
-
-  void getProductData(String pid, int i) async {
-    var url = 'http://127.0.0.1:8000/product/'+pid;
-    var response = await http.get(Uri.parse(url));
-    setState(() {
-      var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
-      productInfo = dataFromJSON;
-    });
-
   }
 
   void settingEntryTap(int settingID) {
     print(settingID);
     switch(settingID){
-      case 1: Navigator.of(context).pushNamed('/mypage/subscribe'); break;
+      // Navigator.of(context).pushNamed('/mypage/subscribe');
+      case 1: Navigator.pop(context); break;
       case 2: Navigator.pop(context); break;
       case 3: break;
       case 4: break;
@@ -171,7 +153,7 @@ class _MypageViewState extends State<MypageView> {
               padding: const EdgeInsets.only(top: 20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
+                children: [
                   subscribeCardArea()
                 ],
               ),
@@ -180,7 +162,7 @@ class _MypageViewState extends State<MypageView> {
             Container(
               margin: EdgeInsets.only(top: 30),
               width: double.infinity,
-              child: Divider(color: Color(0xffe7e7e7), thickness: 7.0)
+              child: Divider(color: Color(0xffe7e7e7), thickness: 10.0)
             ),
 
             Container(
@@ -246,29 +228,100 @@ class _MypageViewState extends State<MypageView> {
   Widget buildCardItem(BuildContext context, int index) {
     var left_margin = 10.0;
     if(index == 0) left_margin = 20.0;
-
     var card = Container(
       margin: EdgeInsets.only(left: left_margin),
       child: Column(
-        children: [
-          Text(
-            "subscription info #$index",
-          ),
-          Text(
-            userInfo['subscriptions'][index]['product'].toString(),
-          ),
-          Text(
-            userInfo['subscriptions'][index]['start_at'].toString().substring(0, 10),
-          ),
-          
-        ]
+        children: userInfo['subscriptions'] != null
+                ? [
+                  Container(
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                // product image
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(userInfo['subscriptions'][index]['product']['image'] ?? '')
+                                    )
+                                  )
+                                ),
+                                // info text area
+                                Container(
+                                  padding: EdgeInsets.only(left: 8, right: 8, top: 18),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        userInfo['subscriptions'][index]['product']['company'].toString(),
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black.withOpacity(0.6),
+                                        ),
+                                      ),
+                                      SizedBox(height: 5),
+                                      SizedBox(
+                                        width: 125.0,
+                                        child: Text(
+                                          userInfo['subscriptions'][index]['product']['name'].toString(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.fade, //.ellipsis
+                                          softWrap: false,
+                                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(top: 5),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // subscribeInfo(index),
+                                            subscribeDateInfo(index),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]
+                : [
+                    Text('로딩 실패'),
+                  ],
       ),
       decoration: BoxDecoration(
-        color: Color(0xFF999999), // 0xFFF9F9F9
+        color: Color(0XFF9F9F9F), // 0xFFF9F9F9
         borderRadius: BorderRadius.circular(8),
       ),
     );
     return card;
+  }
+
+  Text subscribeDateInfo(int index) {
+    DateTime createdDate = DateTime.parse(userInfo['subscriptions'][index]['start_at']);
+    // String createdDateString = DateFormat('yyyy/MM/dd').format(createdDate).toString();
+    final now = DateTime.now();
+    final difference = now.difference(createdDate).inDays;
+    String start_at = "구독 " + (difference+1).toString() + "일차\n";
+    return Text(
+      start_at,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 
   GestureDetector buildSettingRow(BuildContext context, String title, int settingID) {
