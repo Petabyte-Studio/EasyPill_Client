@@ -3,23 +3,36 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:group_button/group_button.dart';
+import 'basket_view.dart';
 
 class PurchaseView extends StatefulWidget {
+  List<product>? productInfos;
+  PurchaseView({List<product>? productInfos})
+      : this.productInfos = productInfos ?? [];
   State<StatefulWidget> createState() => _PurchaseView();
 }
 
 class _PurchaseView extends State<PurchaseView> {
   String test = 'Before Add';
+  String address = '주';
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 1, "숭실비타민": 2};
-  int totalPrice = 240000;
+  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 1, "똑똑해지는약": 3};
+  int totalPrice = 0;
 
   @override
   void initState() {
     super.initState();
     data = List.empty(growable: true);
     getJSONData();
+    setTotalPrice();
+  }
+
+  void setTotalPrice() {
+    for (int i = 0; i < widget.productInfos!.length; i++) {
+      totalPrice += widget.productInfos![i].price;
+      print(widget.productInfos![i].price);
+    }
   }
 
   void getJSONData() async {
@@ -40,7 +53,13 @@ class _PurchaseView extends State<PurchaseView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('주문페이지'),
+        title: Text(
+          '주문페이지',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Color(0xFFFFFFFF),
         elevation: 0.5,
       ),
@@ -95,9 +114,8 @@ class _PurchaseView extends State<PurchaseView> {
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 numberComma
-                                        .format((data![index]['price'] *
-                                            productInfo.values
-                                                .elementAt(index)))
+                                        .format(
+                                            widget.productInfos![index].price)
                                         .toString() +
                                     '원',
                                 textAlign: TextAlign.left,
@@ -408,6 +426,7 @@ class _PurchaseView extends State<PurchaseView> {
                   "무통장입금",
                   "휴대폰 결제",
                 ],
+                selectedButton: 0,
                 selectedTextStyle: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
