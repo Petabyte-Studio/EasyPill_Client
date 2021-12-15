@@ -191,14 +191,17 @@ class _BasketView extends State<BasketView> {
                                               icon: Icon(Icons.remove),
                                               onPressed: () => setState(() {
                                                 productInfos[index].count--;
-
                                                 if (productInfos[index].count <=
                                                     0)
                                                   productInfos[index]
                                                       .isDisabled = true;
-                                                totalPrice -= int.parse(
-                                                    data![index]['price']
-                                                        .toString());
+                                                if (productInfos[index]
+                                                        .checkBox ==
+                                                    true) {
+                                                  totalPrice -= int.parse(
+                                                      data![index]['price']
+                                                          .toString());
+                                                }
                                                 productInfos[index].price =
                                                     data![index]['price'] *
                                                         productInfos[index]
@@ -214,9 +217,13 @@ class _BasketView extends State<BasketView> {
                                                 productInfos[index].count++;
                                                 productInfos[index].isDisabled =
                                                     false;
-                                                totalPrice += int.parse(
-                                                    data![index]['price']
-                                                        .toString());
+                                                if (productInfos[index]
+                                                        .checkBox ==
+                                                    true) {
+                                                  totalPrice += int.parse(
+                                                      data![index]['price']
+                                                          .toString());
+                                                }
                                                 productInfos[index].price =
                                                     data![index]['price'] *
                                                         productInfos[index]
