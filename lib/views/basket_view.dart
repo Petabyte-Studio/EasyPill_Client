@@ -9,12 +9,16 @@ class BasketView extends StatefulWidget {
 }
 
 class product {
+  int id = 0;
+  String name = "";
   bool checkBox = true;
-  var count = 0;
-  var price = 0;
+  int count = 0;
+  int price = 0;
   bool isDisabled = false;
 
-  product(int count, int price) {
+  product(int id, String name, int count, int price) {
+    this.id = id;
+    this.name = name;
     this.count = count;
     this.price = price;
   }
@@ -23,15 +27,15 @@ class product {
 class _BasketView extends State<BasketView> {
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 3, "똑똑해지는약": 4};
+  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 3, "똑똑해지는약": 4, "숭실비타민": 2};
   List<product> productInfos = [];
+  List<product> tempProducts = [];
   product? tempProduct;
   int totalPrice = 0;
 
   @override
   void initState() {
     super.initState();
-    data = List.empty(growable: true);
     data = List.empty(growable: true);
     getJSONData();
   }
@@ -54,11 +58,21 @@ class _BasketView extends State<BasketView> {
   void makeProductObject() {
     for (int i = 0; i < productInfo.length; i++) {
       tempProduct = new product(
+          data![i]['id'] ?? 0,
+          productInfo.keys.elementAt(i),
           productInfo[data![i]['name'].toString()] ?? 0,
           int.parse(data![i]['price'].toString()) *
               productInfo.values.elementAt(i));
       productInfos.add(tempProduct!);
       totalPrice += productInfos[i].price;
+    }
+  }
+
+  void deleteInListIfNotChecked() {
+    tempProducts = List.from(productInfos);
+    for (int i = 0; i < productInfos.length; i++) {
+      tempProducts
+          .removeWhere((tempProducts) => tempProducts.checkBox == false);
     }
   }
 
@@ -321,6 +335,7 @@ class _BasketView extends State<BasketView> {
                       width: 80,
                       margin: EdgeInsets.only(left: 30, right: 30),
                       child: Text(numberComma.format(totalPrice).toString(),
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -331,18 +346,30 @@ class _BasketView extends State<BasketView> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 minimumSize: Size.fromHeight(60),
+                                elevation: 0,
                                 primary: Color(0xFF6FCF97),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.zero,
                                 )),
                             onPressed: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => PurchaseView(
-                                          productInfos: productInfos,
-                                        ),
-                                      )),
+                                  deleteInListIfNotChecked(),
+                                  if (tempProducts.length != 0)
+                                    {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PurchaseView(
+                                              productInfos: tempProducts,
+                                            ),
+                                          ))
+                                    }
+                                  else
+                                    {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text("하나 이상의 상품을 선택해 주세요."))),
+                                    },
                                 },
                             child: Text('구매하기',
                                 style: TextStyle(

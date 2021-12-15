@@ -17,7 +17,6 @@ class _PurchaseView extends State<PurchaseView> {
   String address = '주';
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 1, "똑똑해지는약": 3};
   int totalPrice = 0;
 
   @override
@@ -31,15 +30,14 @@ class _PurchaseView extends State<PurchaseView> {
   void setTotalPrice() {
     for (int i = 0; i < widget.productInfos!.length; i++) {
       totalPrice += widget.productInfos![i].price;
-      print(widget.productInfos![i].price);
     }
   }
 
   void getJSONData() async {
     String url;
-    for (int i = 0; i < productInfo.length; i++) {
+    for (int i = 0; i < widget.productInfos!.length; i++) {
       url = 'http://127.0.0.1:8000/product?search=' +
-          productInfo.keys.elementAt(i).toString() +
+          widget.productInfos![i].name +
           '&search_fields=name';
       var response = await http.get(Uri.parse(url));
       setState(() {
@@ -67,7 +65,7 @@ class _PurchaseView extends State<PurchaseView> {
           child: ListView(children: <Widget>[
         Container(
             margin: EdgeInsets.only(left: 20, top: 20),
-            child: Text('주문상품 (' + productInfo.length.toString() + ')',
+            child: Text('주문상품 (' + widget.productInfos!.length.toString() + ')',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
         ListView.builder(
             physics: NeverScrollableScrollPhysics(),
