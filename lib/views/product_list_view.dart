@@ -4,11 +4,12 @@ import 'package:badges/badges.dart';
 import 'dart:convert';
 import '../data/category.dart';
 
-class ProductView extends StatefulWidget {
-  State<StatefulWidget> createState() => _ProductView();
+class ProductListView extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ProductListView();
 }
 
-class _ProductView extends State<ProductView> {
+class _ProductListView extends State<ProductListView> {
   String test = 'Before Add';
   List? data;
   int sortMethod = 0;
@@ -153,9 +154,10 @@ class _ProductView extends State<ProductView> {
                       child: const CircularProgressIndicator(),
                       alignment: Alignment.center,
                     )
-                  : ListView.builder(
+                  : ListView.separated(
                       itemBuilder: (context, index) {
-                        return GestureDetector(
+                        return InkWell(
+                          splashFactory: NoSplash.splashFactory,
                           child: Column(
                             children: [
                               ListTile(
@@ -164,7 +166,7 @@ class _ProductView extends State<ProductView> {
                                   children: <Widget>[
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Image.network(
                                             data![index]['image'].toString(),
@@ -177,8 +179,6 @@ class _ProductView extends State<ProductView> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Text(
                                                     data![index]['company']
@@ -248,8 +248,6 @@ class _ProductView extends State<ProductView> {
                                   ],
                                 ),
                               ),
-                              const Divider(
-                                  height: 10, color: Color(0xFFF1F1F1)),
                             ],
                           ),
                           onTap: () {
@@ -258,6 +256,10 @@ class _ProductView extends State<ProductView> {
                                 arguments: data![index]['id'].toString());
                           },
                         );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                            height: 10, color: Color(0xFFF1F1F1));
                       },
                       itemCount: data!.length),
             ),

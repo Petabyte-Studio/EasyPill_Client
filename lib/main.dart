@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'views/product_view.dart';
-import 'views/setting_view.dart';
-import 'views/detail_view.dart';
-import 'views/category_view.dart';
-import 'views/eat_view.dart';
-import 'views/comment_view.dart';
-import 'views/mypage_view.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'views/views.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,9 +33,23 @@ MaterialColor createMaterialColor(Color color) {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  Future<Database> initDatabase() async {
+    return openDatabase(
+      join(await getDatabasesPath(), 'pill_database.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE eat_table(id INTEGER PRIMARY KEY AUTOINCREMENT, eatDate DATETIME, pillName TEXT, completed BOOLEAN, time INTEGER)",
+        );
+      },
+      version: 1,
+    );
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Future<Database> database = initDatabase();
+
     return MaterialApp(
         title: 'EasyPill',
         theme: ThemeData(
@@ -50,11 +60,11 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => MainPage(),
           '/category': (context) => CategoryView(),
-          '/category/product': (context) => ProductView(),
+          '/category/product': (context) => ProductListView(),
           '/category/product/detail': (context) => DetailView(),
           '/category/product/detail/comment': (context) => CommentView(),
           '/setting': (context) => SettingView(),
-          '/funny': (context) => EatView(),
+          '/eat': (context) => EatView(database),
           '/mypage': (context) => MypageView(),
           // '/detail' :
         });
@@ -89,7 +99,7 @@ class _MainPageState extends State<MainPage> {
           ElevatedButton(
               child: Text('Funny'),
               onPressed: () {
-                Navigator.of(context).pushNamed('/funny');
+                Navigator.of(context).pushNamed('/eat');
               }),
           ElevatedButton(
               child: Text('Mypage'),
