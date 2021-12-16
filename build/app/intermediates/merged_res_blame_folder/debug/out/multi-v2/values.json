@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "/Users/shin/StudioProjects/EasyPill_Client/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\661916236e43717cc696f8739fdee049\\core-1.1.0\\res\\values\\values.xml",
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/661916236e43717cc696f8739fdee049/core-1.1.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,83,84,88,89,90,91,98,141,173,210",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,26 +23,41 @@
                     }
                 },
                 {
-                    "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/cafdb1caa8d034100062b68de8ac45d1/browser-1.0.0/res/values/values.xml",
                     "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "176,830",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "472,996"
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,113,179,242,304,375",
+                        "endColumns": "57,65,62,61,70,71",
+                        "endOffsets": "108,174,237,299,370,442"
                     },
                     "to": {
-                        "startLines": "119,124",
-                        "startColumns": "4,4",
-                        "startOffsets": "8986,9283",
-                        "endLines": "123,126",
-                        "endColumns": "12,12",
-                        "endOffsets": "9278,9447"
+                        "startLines": "3,4,5,6,19,20",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "166,224,290,353,1350,1421",
+                        "endColumns": "57,65,62,61,70,71",
+                        "endOffsets": "219,285,348,410,1416,1488"
                     }
                 },
                 {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\1f9db97eb152a36493e18af28499b1e2\\jetified-play-services-base-17.1.0\\res\\values\\values.xml",
+                    "source": "/Users/shin/StudioProjects/EasyPill_Client/build/app/generated/res/google-services/debug/values/values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,199,281,385,494,614,712",
+                        "endColumns": "143,81,103,108,119,97,74",
+                        "endOffsets": "194,276,380,489,609,707,782"
+                    },
+                    "to": {
+                        "startLines": "111,112,113,114,115,116,117",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "8183,8327,8409,8513,8622,8742,8840",
+                        "endColumns": "143,81,103,108,119,97,74",
+                        "endOffsets": "8322,8404,8508,8617,8737,8835,8910"
+                    }
+                },
+                {
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/1f9db97eb152a36493e18af28499b1e2/jetified-play-services-base-17.1.0/res/values/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,33,46",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -61,24 +76,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\d5cbc4584967a18e03313036bcd07885\\jetified-play-services-basement-17.1.0\\res\\values\\values.xml",
-                    "from": {
-                        "startLines": "4,7",
-                        "startColumns": "0,0",
-                        "startOffsets": "238,401",
-                        "endColumns": "63,166",
-                        "endOffsets": "301,567"
-                    },
-                    "to": {
-                        "startLines": "91,101",
-                        "startColumns": "4,4",
-                        "startOffsets": "5712,6890",
-                        "endColumns": "67,166",
-                        "endOffsets": "5775,7052"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\c09f27b7cc276eaefd82ccc59b92604b\\coordinatorlayout-1.0.0\\res\\values\\values.xml",
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/c09f27b7cc276eaefd82ccc59b92604b/coordinatorlayout-1.0.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,102,3,13",
                         "startColumns": "4,4,4,4",
@@ -97,37 +95,39 @@
                     }
                 },
                 {
-                    "source": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/d5cbc4584967a18e03313036bcd07885/jetified-play-services-basement-17.1.0/res/values/values.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "55,199,281,385,494,614,712",
-                        "endColumns": "143,81,103,108,119,97,74",
-                        "endOffsets": "194,276,380,489,609,707,782"
+                        "startLines": "4,7",
+                        "startColumns": "0,0",
+                        "startOffsets": "238,401",
+                        "endColumns": "63,166",
+                        "endOffsets": "301,567"
                     },
                     "to": {
-                        "startLines": "111,112,113,114,115,116,117",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "8183,8327,8409,8513,8622,8742,8840",
-                        "endColumns": "143,81,103,108,119,97,74",
-                        "endOffsets": "8322,8404,8508,8617,8737,8835,8910"
+                        "startLines": "91,101",
+                        "startColumns": "4,4",
+                        "startOffsets": "5712,6890",
+                        "endColumns": "67,166",
+                        "endOffsets": "5775,7052"
                     }
                 },
                 {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\cafdb1caa8d034100062b68de8ac45d1\\browser-1.0.0\\res\\values\\values.xml",
+                    "source": "/Users/shin/StudioProjects/EasyPill_Client/android/app/src/main/res/values/styles.xml",
                     "from": {
-                        "startLines": "2,3,4,5,6,7",
-                        "startColumns": "4,4,4,4,4,4",
-                        "startOffsets": "55,113,179,242,304,375",
-                        "endColumns": "57,65,62,61,70,71",
-                        "endOffsets": "108,174,237,299,370,442"
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,816",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "465,980"
                     },
                     "to": {
-                        "startLines": "3,4,5,6,19,20",
-                        "startColumns": "4,4,4,4,4,4",
-                        "startOffsets": "166,224,290,353,1350,1421",
-                        "endColumns": "57,65,62,61,70,71",
-                        "endOffsets": "219,285,348,410,1416,1488"
+                        "startLines": "119,124",
+                        "startColumns": "4,4",
+                        "startOffsets": "8986,9283",
+                        "endLines": "123,126",
+                        "endColumns": "12,12",
+                        "endOffsets": "9278,9447"
                     }
                 }
             ]

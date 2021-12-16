@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\Develop\\Project\\EasyPill\\easypill_client\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en-rCA\\values-en-rCA.xml",
+            "outputFile": "/Users/shin/StudioProjects/EasyPill_Client/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-en-rCA/values-en-rCA.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\devap\\.gradle\\caches\\transforms-2\\files-2.1\\661916236e43717cc696f8739fdee049\\core-1.1.0\\res\\values-en-rCA\\values-en-rCA.xml",
+                    "source": "/Users/shin/.gradle/caches/transforms-2/files-2.1/661916236e43717cc696f8739fdee049/core-1.1.0/res/values-en-rCA/values-en-rCA.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

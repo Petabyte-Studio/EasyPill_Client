@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'views/product_view.dart';
 import 'views/setting_view.dart';
 import 'views/detail_view.dart';
+import 'views/purchase_view.dart';
+import 'views/basket_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
           '/setting': (context) => SettingView(),
           '/detail': (context) => DetailView(),
           // '/detail' :
+          '/basket': (context) => BasketView(),
+          '/basket/purchase': (context) => PurchaseView(),
         });
   }
 }
@@ -76,6 +80,16 @@ class _MainPageState extends State<MainPage> {
               child: Text('Setting'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/setting');
+              }),
+          ElevatedButton(
+              child: Text('purchase'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/basket/purchase');
+              }),
+          ElevatedButton(
+              child: Text('basket'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/basket');
               }),
         ],
       ),
