@@ -5,3 +5,5 @@ export 'eat_view.dart';
 export 'mypage_view.dart';
 export 'product_list_view.dart';
 export 'setting_view.dart';
+export 'purchase_view.dart';
+export 'basket_view.dart';
