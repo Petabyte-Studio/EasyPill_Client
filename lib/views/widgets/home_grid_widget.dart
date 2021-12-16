@@ -97,6 +97,9 @@ class HomeGridWidget extends StatelessWidget {
       child: GridView.count(
         crossAxisCount: axisCount,
         padding: const EdgeInsets.all(10),
+        physics:
+            NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+        shrinkWrap: true,
         children: List.generate(titles?.length ?? 0, (index) {
           return rectangleContainer(
             title: titles?[index],
