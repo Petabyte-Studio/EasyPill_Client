@@ -27,7 +27,7 @@ class product {
 class _BasketView extends State<BasketView> {
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"KIRKLAND 비타민 C": 3, "똑똑해지는약": 4, "숭실비타민": 2};
+  Map<String, int> productInfo = {"센트롬 멀티비타민 포 맨": 3, "똑똑해지는약": 4, "숭실비타민": 2};
   List<product> productInfos = [];
   List<product> tempProducts = [];
   product? tempProduct;
@@ -158,10 +158,16 @@ class _BasketView extends State<BasketView> {
                                   SizedBox(height: 10),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        data![index]['description'].toString(),
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 12),
+                                      child: SizedBox(
+                                        width: 230,
+                                        child: Text(
+                                          data![index]['description'].toString(),
+                                          // maxLines: 1,
+                                          overflow: TextOverflow.fade,
+                                          softWrap: false,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(fontSize: 12),
+                                        ),
                                       )),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),

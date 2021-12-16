@@ -224,7 +224,7 @@ class _MypageViewState extends State<MypageView> {
         child: PageView.builder(
           padEnds: false,
           itemCount: subscribeCnt,
-          controller: PageController(viewportFraction: 0.55),
+          controller: PageController(viewportFraction: 0.6),
           itemBuilder: (BuildContext context, int index) {
             return buildCardItem(context, index);
           },
@@ -275,7 +275,7 @@ class _MypageViewState extends State<MypageView> {
                                       ),
                                       SizedBox(height: 5),
                                       SizedBox(
-                                        width: 100.0,
+                                        width: 130.0,
                                         child: Text(
                                           userInfo['subscriptions'][index]['product']['name'].toString(),
                                           maxLines: 1,
