@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
           '/category/product/detail/comment': (context) => CommentView(),
           '/setting': (context) => SettingView(),
           '/eat': (context) => EatView(database),
+          '/mypage': (context) => MypageView(),
           // '/detail' :
         });
   }
@@ -99,6 +100,11 @@ class _MainPageState extends State<MainPage> {
               child: Text('Funny'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/eat');
+              }),
+          ElevatedButton(
+              child: Text('Mypage'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/mypage');
               }),
         ],
       ),
