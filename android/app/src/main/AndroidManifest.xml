@@ -2,8 +2,7 @@
     package="com.example.easypill_client">
    <application
         android:label="easypill_client"
-        android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
