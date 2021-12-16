@@ -17,7 +17,7 @@ class _ProductListView extends State<ProductListView> {
   List<String> sortMethodList = [
     'name',
     '-comment_count',
-    'created_at',
+    '-created_at',
     'price',
     '-avg_rate',
   ];
@@ -30,7 +30,10 @@ class _ProductListView extends State<ProductListView> {
     Future.delayed(Duration.zero, () {
       setState(() {
         category = ModalRoute.of(context)!.settings.arguments;
-
+        if (category[0] == '>') {
+          sortMethod = int.parse(category[1]);
+          category = category.substring(2);
+        }
         getJSONData(category == '전체보기' ? '' : category);
       });
     });
