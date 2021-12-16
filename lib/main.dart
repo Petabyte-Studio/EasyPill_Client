@@ -66,6 +66,7 @@ class MyApp extends StatelessWidget {
           '/setting': (context) => SettingView(),
           '/eat': (context) => EatView(database),
           '/mypage': (context) => MypageView(),
+          '/basket': (context) => BasketView(),
           // '/detail' :
         });
   }
@@ -105,6 +106,11 @@ class _MainPageState extends State<MainPage> {
               child: Text('Mypage'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/mypage');
+              }),
+          ElevatedButton(
+              child: Text('Basket'),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/basket');
               }),
         ],
       ),
