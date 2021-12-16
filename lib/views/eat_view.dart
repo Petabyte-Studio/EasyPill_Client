@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart';
+import 'package:sqflite/sqflite.dart';
 
 class EatView extends StatefulWidget {
+  final Future<Database> db;
+  EatView(this.db);
+
   @override
   State<StatefulWidget> createState() => _EatView();
 }
@@ -288,6 +292,11 @@ class _EatView extends State<EatView> {
                 DateTime(2021, 12, 8): 2,
                 DateTime(2021, 12, 1): 3,
               }),
+              Container(
+                width: 40,
+                height: 40,
+                color: Colors.black,
+              ),
             ],
           ),
           // Bottom Sheet 부분
