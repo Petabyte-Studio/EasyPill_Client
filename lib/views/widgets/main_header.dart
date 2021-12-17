@@ -6,7 +6,7 @@ class MainHeader extends StatelessWidget {
   DateTime _now = DateTime.now();
 
   final String userName;
-  final ImageProvider<Object>? userImage;
+  final String userImage;
   final int? age;
   final String? sex;
   final String? address;
@@ -15,7 +15,7 @@ class MainHeader extends StatelessWidget {
 
   MainHeader({
     this.userName = '게스트',
-    this.userImage,
+    this.userImage = '',
     this.age,
     this.sex,
     this.address,
@@ -148,10 +148,21 @@ class MainHeader extends StatelessWidget {
                 ),
                 const Spacer(),
                 GestureDetector(
-                  child: CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Colors.white,
-                    foregroundImage: userImage,
+                  // child: CircleAvatar(
+                  //   radius: 24,
+                  //   backgroundColor: Colors.white,
+                  //   foregroundImage: userImage,
+                  // ),
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(userImage ?? '')
+                      )
+                    )
                   ),
                   onTap: () => Navigator.of(context).pushNamed('/mypage'),
                 ),

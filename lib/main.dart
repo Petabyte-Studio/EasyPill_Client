@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -89,15 +90,18 @@ class _MainPageState extends State<MainPage> {
   final DateTime _today =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
+  FirebaseAuth auth = FirebaseAuth.instance;
   List? recommendData;
   List? newData;
-
+  Map<String, dynamic> userInfo = <String, dynamic>{};
+  
   @override
   void initState() {
     super.initState();
     recommendData = List.empty(growable: true);
     newData = List.empty(growable: true);
     getJSONData();
+    getUserData();
   }
 
   void getJSONData() async {
@@ -110,6 +114,15 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       recommendData!.addAll(json.decode(utf8.decode(response1.bodyBytes)));
       newData!.addAll(json.decode(utf8.decode(response2.bodyBytes)));
+    });
+  }
+
+  void getUserData() async {
+    var url = 'http://127.0.0.1:8000/user/?search='+(auth.currentUser?.uid.toString() ?? '');
+    var response = await http.get(Uri.parse(url));
+    setState(() {
+      var parsed = json.decode(utf8.decode(response.bodyBytes));
+      userInfo = parsed[0];
     });
   }
 
@@ -154,6 +167,8 @@ class _MainPageState extends State<MainPage> {
       body: ListView(
         children: <Widget>[
           MainHeader(
+            userName: userInfo['name'].toString(),
+            userImage: userInfo['image'].toString(),
             age: 25,
             sex: '남',
             address: '동작구',
