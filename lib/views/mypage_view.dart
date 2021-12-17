@@ -34,8 +34,6 @@ class _MypageViewState extends State<MypageView> {
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
       userInfo = dataFromJSON[0];
-      print("esefs");
-      print(userInfo['subscriptions']);
       // subscribeCnt = userInfo['subscriptions'] == null ? 1 : userInfo['subscriptions'].length;
       subscribeCnt=userInfo['subscriptions'].length;
       if(subscribeCnt != 0){
@@ -46,7 +44,6 @@ class _MypageViewState extends State<MypageView> {
   }
 
   void settingEntryTap(int settingID) {
-    print(settingID);
     switch(settingID){
       // Navigator.of(context).pushNamed('/mypage/subscribe');
       case 1: Navigator.pop(context); break;
@@ -203,7 +200,6 @@ class _MypageViewState extends State<MypageView> {
 
   SizedBox subscribeCardArea() {
     if(isNothing == true){
-      print("nothing exist");
       return SizedBox(
         child: Container(
           padding: const EdgeInsets.only(left: 20),
