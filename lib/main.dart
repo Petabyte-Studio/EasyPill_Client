@@ -206,7 +206,7 @@ class _MainPageState extends State<MainPage> {
           ),
           const SizedBox(height: 20),
           HomeGridWidget(
-            titles: ['새로 들어온\n비타민 C', '지금 가장 핫한\n인기순위'],
+            titles: ['새로 들어온\n멀티비타민', '지금 가장 핫한\n인기순위'],
             subtitles: ['제품 보러가기', '순위 보러가기'],
             backgroundColors: [
               const Color(0xFFFFEDE9).withOpacity(0.9),
@@ -222,7 +222,7 @@ class _MainPageState extends State<MainPage> {
             ],
             callbacks: [
               () => Navigator.of(context)
-                  .pushNamed('/category/product', arguments: '>2비타민C'),
+                  .pushNamed('/category/product', arguments: '>2멀티비타민'),
               () => Navigator.of(context)
                   .pushNamed('/category/product', arguments: '>1전체보기'),
             ],
