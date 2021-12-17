@@ -27,7 +27,7 @@ class product {
 class _BasketView extends State<BasketView> {
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"센트롬 멀티비타민 포 맨": 3, "똑똑해지는약": 4, "숭실비타민": 2};
+  Map<String, int> productInfo = {"23": 1, "25": 1, "21": 1};
   List<product> productInfos = [];
   List<product> tempProducts = [];
   product? tempProduct;
@@ -45,7 +45,7 @@ class _BasketView extends State<BasketView> {
     for (int i = 0; i < productInfo.length; i++) {
       url = 'http://49.247.147.204:8000/product?search=' +
           productInfo.keys.elementAt(i).toString() +
-          '&search_fields=name';
+          '&search_fields=id';
       var response = await http.get(Uri.parse(url));
       setState(() {
         var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -140,10 +140,14 @@ class _BasketView extends State<BasketView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Container(
+                                      width: 200,
                                       margin: EdgeInsets.only(left: 10),
                                       child: Text(
                                         data![index]['name'].toString(),
                                         textAlign: TextAlign.left,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.fade,
+                                        softWrap: false,
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold),
@@ -163,7 +167,7 @@ class _BasketView extends State<BasketView> {
                                         child: Text(
                                           data![index]['description']
                                               .toString(),
-                                          // maxLines: 1,
+                                          maxLines: 1,
                                           overflow: TextOverflow.fade,
                                           softWrap: false,
                                           textAlign: TextAlign.left,
