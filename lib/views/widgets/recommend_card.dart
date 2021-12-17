@@ -5,18 +5,18 @@ class RecommendCard extends StatelessWidget {
   Map<String, dynamic> data = <String, dynamic>{};
   int? idx;
 
-  RecommendCard({ required this.data, this.idx });
+  RecommendCard({required this.data, this.idx});
 
   @override
   Widget build(BuildContext context) {
     var left_margin = 15.0;
-    if(idx == 0) left_margin = 20.0;
+    if (idx == 0) left_margin = 20.0;
     var card = Container(
       margin: EdgeInsets.only(left: left_margin),
       child: Column(
         children: [
-        Container(
-          child: Padding(
+          Container(
+            child: Padding(
               padding: EdgeInsets.only(left: 10, right: 10, top: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,15 +25,12 @@ class RecommendCard extends StatelessWidget {
                     children: [
                       // product image
                       Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(data['image'] ?? '')
-                          )
-                        )
-                      ),
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image: NetworkImage(data['image'] ?? '')))),
                       // product info
                       Container(
                         padding: EdgeInsets.only(left: 8, right: 8, top: 15),
@@ -53,12 +50,13 @@ class RecommendCard extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 1, bottom: 1),
+                                  padding:
+                                      const EdgeInsets.only(left: 1, bottom: 1),
                                   child: Text(
                                     "BEST",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold, 
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 10.0,
                                     ),
                                   ),
@@ -74,8 +72,8 @@ class RecommendCard extends StatelessWidget {
                               overflow: TextOverflow.fade, //.ellipsis
                               softWrap: false,
                               style: TextStyle(
-                                color: Colors.black, 
-                                fontWeight: FontWeight.bold, 
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                                 fontSize: 16.0,
                               ),
                             ),
