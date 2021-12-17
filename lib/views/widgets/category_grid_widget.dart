@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryGrid extends StatelessWidget {
-  String? category1 = Category.categoryList.keys.elementAt(1);
-  String? category2 = Category.categoryList.keys.elementAt(2);
-  String? category3 = Category.categoryList.keys.elementAt(4);
+  String? category1 = Category.categoryList.keys.elementAt(4);
+  String? category2 = Category.categoryList.keys.elementAt(5);
+  String? category3 = Category.categoryList.keys.elementAt(1);
   String? category4 = Category.categoryList.keys.elementAt(6);
   String? category5 = Category.categoryList.keys.elementAt(3);
-  String? category6 = Category.categoryList.keys.elementAt(5);
+  String? category6 = Category.categoryList.keys.elementAt(2);
   String? category7 = Category.categoryList.keys.elementAt(7);
   String? engCategory;
   EdgeInsets? padding;
