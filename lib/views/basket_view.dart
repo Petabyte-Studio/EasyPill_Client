@@ -27,7 +27,7 @@ class product {
 class _BasketView extends State<BasketView> {
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"23": 1, "25": 1, "21": 1};
+  Map<String, int> productInfo = {"36": 1, "25": 1, "33": 1};
   List<product> productInfos = [];
   List<product> tempProducts = [];
   product? tempProduct;
@@ -59,8 +59,8 @@ class _BasketView extends State<BasketView> {
     for (int i = 0; i < productInfo.length; i++) {
       tempProduct = new product(
           data![i]['id'] ?? 0,
-          productInfo.keys.elementAt(i),
-          productInfo[data![i]['name'].toString()] ?? 0,
+          data![i]['name'],
+          productInfo[data![i]['id'].toString()] ?? 1,
           int.parse(data![i]['price'].toString()) *
               productInfo.values.elementAt(i));
       productInfos.add(tempProduct!);
