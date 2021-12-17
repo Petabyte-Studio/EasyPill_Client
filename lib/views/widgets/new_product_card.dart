@@ -24,7 +24,7 @@ class NewProductCard extends StatelessWidget {
               height: 80,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       image: NetworkImage(data['image'] ?? '')))),
 
           // product informations
