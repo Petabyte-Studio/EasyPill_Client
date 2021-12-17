@@ -148,16 +148,12 @@ class MainHeader extends StatelessWidget {
                 ),
                 const Spacer(),
                 GestureDetector(
-                  // child: CircleAvatar(
-                  //   radius: 24,
-                  //   backgroundColor: Colors.white,
-                  //   foregroundImage: userImage,
-                  // ),
                   child: Container(
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
+                      color: Colors.white,
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(userImage ?? '')
