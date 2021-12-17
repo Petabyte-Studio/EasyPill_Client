@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
     Future<Database> database = initDatabase();
 
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'EasyPill',
         theme: ThemeData(
           primarySwatch: createMaterialColor(const Color(0xFF6FCF97)),
