@@ -36,9 +36,9 @@ class _PurchaseView extends State<PurchaseView> {
   void getJSONData() async {
     String url;
     for (int i = 0; i < widget.productInfos!.length; i++) {
-      url = 'http://127.0.0.1:8000/product?search=' +
-          widget.productInfos![i].name +
-          '&search_fields=name';
+      url = 'http://49.247.147.204:8000/product?search=' +
+          (widget.productInfos![i].id).toString() +
+          '&search_fields=id';
       var response = await http.get(Uri.parse(url));
       setState(() {
         var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -86,9 +86,13 @@ class _PurchaseView extends State<PurchaseView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
+                              width: 250,
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 data![index]['name'].toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
@@ -102,9 +106,13 @@ class _PurchaseView extends State<PurchaseView> {
                               )),
                           SizedBox(height: 10),
                           Container(
+                              width: 250,
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 data![index]['description'].toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(fontSize: 12),
                               )),

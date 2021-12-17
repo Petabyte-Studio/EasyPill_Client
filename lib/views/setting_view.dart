@@ -50,7 +50,7 @@ class _SettingViewState extends State<SettingView> {
   }
 
   void getUserData() async {
-    var url = 'http://127.0.0.1:8000/user/?search=' +
+    var url = 'http://49.247.147.204:8000/user/?search=' +
         (auth.currentUser?.uid.toString() ?? '');
     var response = await http.get(Uri.parse(url));
     setState(() {
@@ -60,7 +60,7 @@ class _SettingViewState extends State<SettingView> {
   }
 
   void postUserData() async {
-    var url = 'http://127.0.0.1:8000/user/';
+    var url = 'http://49.247.147.204:8000/user/';
     http.post(
       Uri.parse(url),
       headers: <String, String>{

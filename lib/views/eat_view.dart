@@ -292,11 +292,6 @@ class _EatView extends State<EatView> {
                 DateTime(2021, 12, 8): 2,
                 DateTime(2021, 12, 1): 3,
               }),
-              Container(
-                width: 40,
-                height: 40,
-                color: Colors.black,
-              ),
             ],
           ),
           // Bottom Sheet 부분
@@ -334,7 +329,7 @@ class _EatView extends State<EatView> {
                             ),
                           ),
                           Text(
-                            '${(5 / 6 * 100).floor()}%',
+                            '${(0 / 6 * 100).floor()}%',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -348,7 +343,7 @@ class _EatView extends State<EatView> {
                         hours: 8,
                         minutes: 30,
                         eatInfoMap: {
-                          "KrikLand 오메가3": true,
+                          "KrikLand 오메가3": false,
                           "KrikLand 비타민C": false
                         },
                       ),
@@ -357,8 +352,8 @@ class _EatView extends State<EatView> {
                         hours: 13,
                         minutes: 30,
                         eatInfoMap: {
-                          "KrikLand 오메가3": true,
-                          "KrikLand 비타민C": true
+                          "KrikLand 오메가3": false,
+                          "KrikLand 비타민C": false
                         },
                       ),
                       eatInfoList(
@@ -366,8 +361,8 @@ class _EatView extends State<EatView> {
                         hours: 20,
                         minutes: 30,
                         eatInfoMap: {
-                          "KrikLand 오메가3": true,
-                          "KrikLand 비타민C": true
+                          "KrikLand 오메가3": false,
+                          "KrikLand 비타민C": false
                         },
                       ),
                     ],
