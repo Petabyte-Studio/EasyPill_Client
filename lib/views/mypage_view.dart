@@ -100,13 +100,25 @@ class _MypageViewState extends State<MypageView> {
               children: [
                 // profile image
                 Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(userInfo['image'] ?? '')))),
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(userInfo['image'] ?? '')
+                    ),
+                    boxShadow: [
+                      BoxShadow( 
+                        color: Color(0xFFE7E7E7), 
+                        offset: Offset(5.0, 5.0), 
+                        blurRadius: 20.0, 
+                        spreadRadius: 1.0, 
+                      ),
+                    ],
+                  ),
+                ),
                 // edit icon
                 Positioned(
                     top: 0,
@@ -129,7 +141,7 @@ class _MypageViewState extends State<MypageView> {
           Center(
             child: Column(
               children: [
-                SizedBox(height: 15),
+                SizedBox(height: 20),
                 Text(
                   userInfo['name'].toString(),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
