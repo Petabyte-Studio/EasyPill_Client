@@ -548,7 +548,7 @@ class _DetailView extends State<DetailView> {
                         alignment: Alignment.topCenter,
                         child: detail['image'] != null
                             ? Image.network(detail['image'],
-                                width: 180, fit: BoxFit.contain)
+                                height: 180, fit: BoxFit.contain)
                             : null,
                       ),
                     ),
