@@ -6,34 +6,31 @@ class NewProductCard extends StatelessWidget {
   Map<String, dynamic> data = <String, dynamic>{};
   int? idx;
 
-  NewProductCard({ required this.data, this.idx });
+  NewProductCard({required this.data, this.idx});
 
   @override
   Widget build(BuildContext context) {
-    var f = NumberFormat('###,###,###,###'); 
+    var f = NumberFormat('###,###,###,###');
     var left_margin = 15.0;
-    if(idx == 0) left_margin = 20.0;
+    if (idx == 0) left_margin = 20.0;
     var card = Container(
       margin: EdgeInsets.only(left: left_margin),
       child: Row(
         children: [
           // product image
           Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(data['image'] ?? '')
-              )
-            )
-          ),
+              margin: EdgeInsets.only(left: 10),
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(data['image'] ?? '')))),
 
           // product informations
           Container(
-            padding: EdgeInsets.only(left: 10),
-            child: 
-              Column(
+              padding: EdgeInsets.only(left: 10),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -67,16 +64,16 @@ class NewProductCard extends StatelessWidget {
 
                   // product name
                   SizedBox(
-                    width: 150.0,
+                    width: 130.0,
                     child: Text(
                       data['name'].toString(),
                       maxLines: 1,
                       overflow: TextOverflow.fade, //.ellipsis
                       softWrap: false,
                       style: TextStyle(
-                        color: Colors.black, 
-                        fontWeight: FontWeight.bold, 
-                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
                       ),
                     ),
                   ),
@@ -84,9 +81,12 @@ class NewProductCard extends StatelessWidget {
 
                   // product price
                   SizedBox(
-                    width: 150.0,
+                    width: 130.0,
                     child: Text(
-                      data['category'].toString() + ' / ' + f.format(data['price']) + '원',
+                      data['category'].toString() +
+                          ' / ' +
+                          f.format(data['price']) +
+                          '원',
                       maxLines: 1,
                       overflow: TextOverflow.fade, //.ellipsis
                       softWrap: false,
@@ -97,8 +97,7 @@ class NewProductCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
-          ),
+              )),
         ],
       ),
       decoration: BoxDecoration(

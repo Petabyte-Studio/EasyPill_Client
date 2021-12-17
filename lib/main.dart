@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
 import 'views/views.dart';
+import 'views/widgets/home_grid_widget.dart';
+import 'views/widgets/category_grid_widget.dart';
+import 'views/widgets/main_header.dart';
+import 'views/widgets/new_product_card.dart';
+import 'views/widgets/recommend_card.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -78,39 +86,157 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final DateTime _today =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+  List? recommendData;
+  List? newData;
+
+  @override
+  void initState() {
+    super.initState();
+    recommendData = List.empty(growable: true);
+    newData = List.empty(growable: true);
+    getJSONData();
+  }
+
+  void getJSONData() async {
+    var url =
+        'http://127.0.0.1:8000/product/?search_fields=category&search=&ordering=-avg_rate';
+    var response1 = await http.get(Uri.parse(url));
+    url =
+        'http://127.0.0.1:8000/product/?search_fields=category&search=&ordering=-created_at';
+    var response2 = await http.get(Uri.parse(url));
+    setState(() {
+      recommendData!.addAll(json.decode(utf8.decode(response1.bodyBytes)));
+      newData!.addAll(json.decode(utf8.decode(response2.bodyBytes)));
+    });
+  }
+
+  Widget sessionTitle({
+    required String title,
+    required Function callback,
+  }) {
+    return InkWell(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: <Widget>[
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF212529),
+              ),
+            ),
+            const Spacer(),
+            const Icon(Icons.arrow_forward_ios, size: 15),
+          ],
+        ),
+      ),
+      onTap: () {
+        callback();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('EasyPill'),
+        toolbarHeight: 0,
         elevation: 0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Color(0xFF6FCF97),
+        ),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
-          ElevatedButton(
-              child: Text('Product'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/category');
-              }),
+          MainHeader(
+            age: 25,
+            sex: '남',
+            address: '동작구',
+            eatTimes: [
+              DateTime(_today.year, _today.month, _today.day, 8, 30),
+              DateTime(_today.year, _today.month, _today.day, 13, 30),
+              DateTime(_today.year, _today.month, _today.day, 20, 30),
+            ],
+            ateList: [false, false, false],
+          ),
+          sessionTitle(title: "제품 추천", callback: () {}),
+          SingleChildScrollView(
+            // padding: const EdgeInsets.only(top: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 210.0,
+                  child: PageView.builder(
+                    padEnds: false,
+                    itemCount: (recommendData!.length > 5
+                        ? 5
+                        : recommendData!.length), // 최대 5개 표시
+                    controller: PageController(viewportFraction: 0.6),
+                    itemBuilder: (context, index) => RecommendCard(
+                      data: recommendData![index],
+                      idx: index,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          HomeGridWidget(
+            titles: ['새로 들어온\n비타민 C', '지금 가장 핫한\n인기순위'],
+            subtitles: ['제품 보러가기', '순위 보러가기'],
+            backgroundColors: [
+              const Color(0xFFFFEDE9).withOpacity(0.9),
+              const Color(0xFFEAEFFB).withOpacity(0.8),
+            ],
+            textColors: [
+              const Color(0xFF994A00),
+              const Color(0xFF2D457E),
+            ],
+            icons: [
+              'assets/images/medicine_character.svg',
+              'assets/images/gold_cup.svg',
+            ],
+            callbacks: [
+              () => Navigator.of(context)
+                  .pushNamed('/category/product', arguments: '>2비타민C'),
+              () => Navigator.of(context)
+                  .pushNamed('/category/product', arguments: '>1전체보기'),
+            ],
+          ),
+          const SizedBox(height: 20),
+          sessionTitle(title: "이번에 새로 나왔어요!", callback: () {}),
+          SingleChildScrollView(
+            // padding: const EdgeInsets.only(top: 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 120.0,
+                  child: PageView.builder(
+                    padEnds: false,
+                    itemCount: (newData!.length > 5 ? 5 : newData!.length),
+                    controller: PageController(viewportFraction: 0.7),
+                    itemBuilder: (context, index) => NewProductCard(
+                      data: newData![index],
+                      idx: index,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          CategoryGrid(),
           ElevatedButton(
               child: Text('Setting'),
               onPressed: () {
                 Navigator.of(context).pushNamed('/setting');
-              }),
-          ElevatedButton(
-              child: Text('Funny'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/eat');
-              }),
-          ElevatedButton(
-              child: Text('Mypage'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/mypage');
-              }),
-          ElevatedButton(
-              child: Text('Basket'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/basket');
               }),
         ],
       ),

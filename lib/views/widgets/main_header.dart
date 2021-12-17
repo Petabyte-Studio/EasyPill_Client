@@ -6,6 +6,7 @@ class MainHeader extends StatelessWidget {
   DateTime _now = DateTime.now();
 
   final String userName;
+  final ImageProvider<Object>? userImage;
   final int? age;
   final String? sex;
   final String? address;
@@ -14,6 +15,7 @@ class MainHeader extends StatelessWidget {
 
   MainHeader({
     this.userName = '게스트',
+    this.userImage,
     this.age,
     this.sex,
     this.address,
@@ -50,14 +52,20 @@ class MainHeader extends StatelessWidget {
         children: <Widget>[
           CircleAvatar(
             radius: 26,
-            child: ate
+            child: eatTime.isBefore(_now)
                 ? const Icon(
-                    Icons.check_sharp,
+                    Icons.close_sharp,
                     size: 28,
-                    color: Color(0xFF6FCF97),
+                    color: Color(0xFFE56060),
                   )
-                : SvgPicture.asset('assets/images/medicine_fill.svg',
-                    width: 28, height: 28),
+                : ate
+                    ? const Icon(
+                        Icons.check_sharp,
+                        size: 28,
+                        color: Color(0xFF6FCF97),
+                      )
+                    : SvgPicture.asset('assets/images/medicine_fill.svg',
+                        width: 28, height: 28),
             backgroundColor: ate
                 ? Color(0xFFF8F9FA)
                 : const Color(0xFF53B175).withOpacity(0.1),
@@ -87,16 +95,22 @@ class MainHeader extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            ate
-                ? '섭취 완료'
-                : remainTime.hour.toString() +
-                    '시간' +
-                    remainTime.minute.toString() +
-                    '분 남음',
+            eatTime.isBefore(_now)
+                ? '섭취 X'
+                : ate
+                    ? '섭취 완료'
+                    : remainTime.hour.toString() +
+                        '시간 ' +
+                        remainTime.minute.toString() +
+                        '분 남음',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: ate ? Color(0xFF6FCF97) : Color(0xFFFF9500),
+              color: eatTime.isBefore(_now)
+                  ? Color(0xFFE56060)
+                  : ate
+                      ? Color(0xFF6FCF97)
+                      : Color(0xFFFF9500),
             ),
           ),
         ],
@@ -137,6 +151,7 @@ class MainHeader extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 24,
                     backgroundColor: Colors.white,
+                    foregroundImage: userImage,
                   ),
                   onTap: () => Navigator.of(context).pushNamed('/mypage'),
                 ),
@@ -144,17 +159,17 @@ class MainHeader extends StatelessWidget {
             ),
             width: double.infinity,
             height: 272,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+            padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
             decoration: BoxDecoration(
                 color: EasyPillColor.primaryColor(),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(60),
                     bottomRight: Radius.circular(60))),
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(left: 18, right: 18, top: 150),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(left: 18, right: 18, top: 150),
             height: 300,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -194,17 +209,21 @@ class MainHeader extends StatelessWidget {
                 pillColumn(
                     eatTime: eatTimes?[0] ?? DateTime.now(),
                     ate: ateList?[0] ?? false,
-                    next: ateList?[0] == false,
+                    next: (eatTimes?[0].isAfter(_now) ?? false),
                     title: '아침'),
                 pillColumn(
                     eatTime: eatTimes?[1] ?? DateTime.now(),
                     ate: ateList?[1] ?? false,
-                    next: ateList?[0] == true && ateList?[1] == false,
+                    next: (eatTimes?[0].isBefore(_now) ?? false) &&
+                        (eatTimes?[1].isAfter(_now) ?? false) &&
+                        ateList?[1] == false,
                     title: '점심'),
                 pillColumn(
                     eatTime: eatTimes?[2] ?? DateTime.now(),
                     ate: ateList?[2] ?? false,
-                    next: ateList?[1] == true && ateList?[2] == false,
+                    next: (eatTimes?[1].isBefore(_now) ?? false) &&
+                        (eatTimes?[2].isAfter(_now) ?? false) &&
+                        (ateList?[2] == false),
                     title: '저녁'),
               ],
             ),

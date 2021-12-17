@@ -69,6 +69,10 @@ flutter:
     - assets/images/medicine_fill.svg
     - assets/images/gold_cup.svg
     - assets/images/medicine_character.svg
+    - assets/images/TopStar1.svg
+    - assets/images/TopStar2.svg
+    - assets/images/TopStar3.svg
+    - assets/images/TopStar4.svg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

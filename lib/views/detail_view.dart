@@ -8,7 +8,10 @@ class DetailView extends StatefulWidget {
 }
 
 class _DetailView extends State<DetailView> {
-  final List<String> _gridText = ["구매자 중 가 만족했어요!", "별점이 높은 제품 " + "/ 5"];
+  final List<String> _gridText = [
+    "구매자 중\n80%가\n만족했어요!",
+    "별점이 높은 제품 " + "4.8 / 5"
+  ];
   final List<Color> _gridTextColor = [
     const Color(0xFFAE4343),
     const Color(0xFF437BAE)
@@ -262,6 +265,8 @@ class _DetailView extends State<DetailView> {
               fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(height: 20),
+          Text(detail['description'].toString()),
         ],
       ),
     );
@@ -541,12 +546,10 @@ class _DetailView extends State<DetailView> {
                     Positioned(
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: CircleAvatar(
-                          radius: 90,
-                          backgroundImage: detail['image'] != null
-                              ? NetworkImage(detail['image'])
-                              : null,
-                        ),
+                        child: detail['image'] != null
+                            ? Image.network(detail['image'],
+                                width: 180, fit: BoxFit.contain)
+                            : null,
                       ),
                     ),
                   ],
