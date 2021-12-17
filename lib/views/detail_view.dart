@@ -27,7 +27,7 @@ class _DetailView extends State<DetailView> {
   void getJSONDataFromID(String? query) async {
     if (query == null) return;
 
-    var url = 'http://127.0.0.1:8000/product/' + query;
+    var url = 'http://49.247.147.204:8000/product/' + query;
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));

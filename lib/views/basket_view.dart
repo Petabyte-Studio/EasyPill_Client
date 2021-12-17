@@ -43,7 +43,7 @@ class _BasketView extends State<BasketView> {
   void getJSONData() async {
     String url;
     for (int i = 0; i < productInfo.length; i++) {
-      url = 'http://127.0.0.1:8000/product?search=' +
+      url = 'http://49.247.147.204:8000/product?search=' +
           productInfo.keys.elementAt(i).toString() +
           '&search_fields=name';
       var response = await http.get(Uri.parse(url));
@@ -161,7 +161,8 @@ class _BasketView extends State<BasketView> {
                                       child: SizedBox(
                                         width: 230,
                                         child: Text(
-                                          data![index]['description'].toString(),
+                                          data![index]['description']
+                                              .toString(),
                                           // maxLines: 1,
                                           overflow: TextOverflow.fade,
                                           softWrap: false,

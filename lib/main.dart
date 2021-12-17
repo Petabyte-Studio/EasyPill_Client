@@ -12,6 +12,7 @@ import 'views/widgets/category_grid_widget.dart';
 import 'views/widgets/main_header.dart';
 import 'views/widgets/new_product_card.dart';
 import 'views/widgets/recommend_card.dart';
+import 'views/widgets/main_footer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,7 +95,7 @@ class _MainPageState extends State<MainPage> {
   List? recommendData;
   List? newData;
   Map<String, dynamic> userInfo = <String, dynamic>{};
-  
+
   @override
   void initState() {
     super.initState();
@@ -106,10 +107,10 @@ class _MainPageState extends State<MainPage> {
 
   void getJSONData() async {
     var url =
-        'http://127.0.0.1:8000/product/?search_fields=category&search=&ordering=-avg_rate';
+        'http://49.247.147.204:8000/product/?search_fields=category&search=&ordering=-avg_rate';
     var response1 = await http.get(Uri.parse(url));
     url =
-        'http://127.0.0.1:8000/product/?search_fields=category&search=&ordering=-created_at';
+        'http://49.247.147.204:8000/product/?search_fields=category&search=&ordering=-created_at';
     var response2 = await http.get(Uri.parse(url));
     setState(() {
       recommendData!.addAll(json.decode(utf8.decode(response1.bodyBytes)));
@@ -118,7 +119,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   void getUserData() async {
-    var url = 'http://127.0.0.1:8000/user/?search='+(auth.currentUser?.uid.toString() ?? '');
+    var url = 'http://49.247.147.204:8000/user/?search=' +
+        (auth.currentUser?.uid.toString() ?? '');
     var response = await http.get(Uri.parse(url));
     setState(() {
       var parsed = json.decode(utf8.decode(response.bodyBytes));
@@ -247,12 +249,10 @@ class _MainPageState extends State<MainPage> {
               ],
             ),
           ),
+          const SizedBox(height: 20),
           CategoryGrid(),
-          ElevatedButton(
-              child: Text('Setting'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/setting');
-              }),
+          const SizedBox(height: 33),
+          MainFooter(),
         ],
       ),
     );

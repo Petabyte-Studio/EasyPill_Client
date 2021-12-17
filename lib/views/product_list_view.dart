@@ -40,10 +40,11 @@ class _ProductListView extends State<ProductListView> {
   }
 
   void getJSONData(var category) async {
-    var url = 'http://127.0.0.1:8000/product/?search_fields=category&search=' +
-        category +
-        '&ordering=' +
-        sortMethodList[sortMethod];
+    var url =
+        'http://49.247.147.204:8000/product/?search_fields=category&search=' +
+            category +
+            '&ordering=' +
+            sortMethodList[sortMethod];
     var response = await http.get(Uri.parse(url));
     setState(() {
       var dataFromJSON = json.decode(utf8.decode(response.bodyBytes));
@@ -135,8 +136,10 @@ class _ProductListView extends State<ProductListView> {
               style: TextStyle(color: Colors.white, fontSize: 10),
             ),
             child: IconButton(
-                icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
-                onPressed: () => {setState(() => basketCount++)}),
+              icon: Icon(Icons.shopping_cart, color: const Color(0xFF1D1D1B)),
+              // onPressed: () => {setState(() => basketCount++)},
+              onPressed: () => Navigator.of(context).pushNamed('/basket'),
+            ),
             showBadge: basketCount > 0,
             elevation: 0,
             badgeColor: Color(0xFFFF9500),

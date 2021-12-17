@@ -36,7 +36,7 @@ class _PurchaseView extends State<PurchaseView> {
   void getJSONData() async {
     String url;
     for (int i = 0; i < widget.productInfos!.length; i++) {
-      url = 'http://127.0.0.1:8000/product?search=' +
+      url = 'http://49.247.147.204:8000/product?search=' +
           widget.productInfos![i].name +
           '&search_fields=name';
       var response = await http.get(Uri.parse(url));
