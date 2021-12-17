@@ -27,7 +27,7 @@ class product {
 class _BasketView extends State<BasketView> {
   List? data;
   var numberComma = NumberFormat('###,###,###,###');
-  Map<String, int> productInfo = {"36": 1, "25": 1, "33": 1};
+  Map<String, int> productInfo = {"36": 1, "25": 1, "23": 1};
   List<product> productInfos = [];
   List<product> tempProducts = [];
   product? tempProduct;

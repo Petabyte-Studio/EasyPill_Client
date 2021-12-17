@@ -86,7 +86,7 @@ class _PurchaseView extends State<PurchaseView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                              width: 200,
+                              width: 250,
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 data![index]['name'].toString(),
@@ -106,7 +106,7 @@ class _PurchaseView extends State<PurchaseView> {
                               )),
                           SizedBox(height: 10),
                           Container(
-                              width: 200,
+                              width: 250,
                               margin: EdgeInsets.only(left: 10),
                               child: Text(
                                 data![index]['description'].toString(),
