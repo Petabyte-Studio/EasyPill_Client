@@ -177,6 +177,7 @@ class _ProductListView extends State<ProductListView> {
                                         Image.network(
                                             data![index]['image'].toString(),
                                             width: 48,
+                                            height: 60,
                                             fit: BoxFit.contain),
                                         Padding(
                                           padding: EdgeInsets.only(left: 19),
